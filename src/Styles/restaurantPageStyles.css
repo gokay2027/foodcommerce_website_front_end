@@ -1,0 +1,183 @@
+.restorantInfoLayout {
+   margin-left: 3%;
+   margin-top: 2%;
+   margin-right: 3%;
+}
+
+
+.restorantNameStyle {
+
+   text-align: center;
+   font-weight: Bold;
+   font-size: larger;
+   margin-top: 5%;
+
+}
+
+.restorantDescriptionStyle {
+   margin-top: 4%;
+   margin-right: 3%;
+   margin-left: 3%;
+   font-size: x-large;
+   text-align: center;
+
+}
+
+.categoryNameStyle {
+   font-weight: bold;
+   margin-left: 3%;
+}
+
+
+.foodCardStyle {
+   height: 200px;
+   background-color: rgb(255, 255, 255);
+   margin-right: 2%;
+   margin-left: 2%;
+   margin-top: 15px;
+   border-radius: 15px;
+   padding-top: 30px;
+   padding-left: 20px;
+}
+
+.bodyCard {
+   margin-top: 100px;
+   margin-right: 3%;
+   margin-left: 3%;
+}
+
+
+.button1 {
+   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.foodImageDiv {
+   width: 30%;
+   height: 140px;
+   background-color: rgb(135, 120, 120);
+   border-radius: 10px;
+}
+
+.rowC {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+}
+
+
+.secondBodyStyle {
+   margin-left: 10px;
+   margin-right: 10px;
+   width: 70%;
+}
+
+
+.foodNameStyle {
+   text-align: center;
+   font-weight: bold;
+}
+
+.raddioButtonDiv {
+   margin-left: 20px;
+   margin-right: 20px;
+}
+
+.radioButtonsBodyStyle {
+   margin-top: 5px;
+}
+
+.decrementButtonStyle {
+   margin-right: 10px;
+   height: 50px;
+   width: 100px;
+}
+
+.incrementButtonStyle {
+   margin-right: 10px;
+   height: 50px;
+   width: 100px;
+}
+
+
+.foodCountStyle {
+   font-weight: bold;
+   margin-top: 10px;
+   margin-right: 15px;
+   margin-left: 10px;
+}
+
+.priceDivstyle {
+   margin-left: 50px;
+   margin-top: 10px;
+}
+
+.evaluationTopic {
+
+
+   margin-left: 4%;
+   margin-top: 20px;
+
+}
+
+.commentCard {
+
+   background-color: rgb(255, 255, 255);
+   border-radius: 10px;
+   margin-left: 4%;
+   margin-right: 4%;
+   padding: 10px;
+   margin-top: 15px;
+
+
+}
+
+.iconStyle {
+   margin-left: 5px;
+}
+
+
+.addCartButton {
+   height: 60px;
+   width: 310px;
+   margin-top: 20px;
+   margin-left: 4%;
+   background-color: blue;
+   font-weight: bold;
+}
+
+.commentInputBodyStyle {
+   height: 100px;
+   background-color: red;
+   margin-top: 10px;
+
+}
+
+
+.textInputStyle {
+   width: 60%;
+   padding: 12px 20px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   box-sizing: border-box;
+   margin-left: 4%;
+   margin-top: 10px;
+}
+
+.selectInputStyle {
+   width: 20%;
+   padding: 12px 20px;
+   margin: 8px 0;
+   display: inline-block;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   box-sizing: border-box;
+   margin-left: 30px;
+}
+
+.evaluationButtonStyle{
+   margin-left: 4%;
+   height: 50px;
+   margin-bottom: 10px;
+   margin-top: 10px;
+   width: 50%;
+}

@@ -1,0 +1,72 @@
+.comboboxStyle{
+    width: 450px;
+    height: 30px;
+    
+}
+
+.nameDivStyle{
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.comboboxBodyDivStyle{
+    margin-top: 20px;
+}
+
+
+.buttonLayout{
+    margin-top: 40px;
+    width: 200px;
+    margin-bottom: 40px;
+    
+}
+
+.thStyle{
+    margin-left: 20px;
+}
+
+
+.containerLayoutStyle{
+    margin-top: 150px;
+    
+}
+
+.priceDivBodyStyle{
+    margin-top: 20px;
+}
+
+
+
+
+.btn-primary:hover,.dropdown-toggle.btn-primary {
+    color: rgb(0, 0, 0);
+    background-color: #389bb1;
+    border-color: #ffffff; /*set the color you want here*/
+}
+
+.bonapetitDiv{
+    text-align: center;
+    margin-top: 150px;
+}
+
+.backgroundStyle{
+    height: 100vh;
+    
+}
+
+
+.alignTdItem{
+    align-items: center;
+    text-align: center;
+    
+}
+
+
+.backgroundDivStyle{
+    background-color: white;
+}
+
+
+

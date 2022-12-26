@@ -1,0 +1,22 @@
+.center {
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+  }
+
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+}
+
+.signUpButton{
+
+    width: 200px;
+
+}
+
+.inputDivStyle{
+    padding-top: 7%;
+   
+}

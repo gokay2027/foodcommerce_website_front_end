@@ -1,0 +1,30 @@
+.iconsDivStyle {
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+}
+
+.button1 {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.rowC {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.navStyle {
+    height: 70px;
+}
+
+.button1 {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.topicStyle {
+    margin-right: 10px;
+    font-weight: bold;
+}

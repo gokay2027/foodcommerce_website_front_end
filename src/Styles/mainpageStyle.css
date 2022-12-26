@@ -1,0 +1,96 @@
+.backgroundImageStyle {
+  text-align: center;
+  background-image: url("../images/foodbackground.jpg");
+  min-width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+.jumbotronStyle {
+  height: 200px;
+}
+
+.jumbotronDivStyle {
+  height: 100px;
+}
+
+
+.titleDiv {
+  padding-top: 50px;
+  color: rgb(0, 0, 0);
+  margin-left: 1rem;
+}
+
+.titleDivStyle {
+  padding-top: 20px;
+  color: rgb(0, 0, 0);
+  margin-left: 1rem;
+}
+
+.categoryButtonStyle {
+  color: white;
+  padding-top: 80px;
+}
+
+.cardTitleStyle {
+  text-align: center;
+}
+
+.restorantCardStyle {
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.button {
+  background-color: #098ee1;
+  /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 2px;
+}
+
+.button1 {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button2:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.buttonAlignStyle {
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+
+}
+
+.divStyle {
+  height: 60px;
+  background-color: red;
+}
+
+.middleDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-left: 40%;
+  margin-right: 40%;
+  margin-top: 10px;
+}
+
+.buttonMargin {
+  margin-top: 10px;
+}
