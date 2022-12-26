@@ -122,6 +122,7 @@ function HomePage(args) {
                 <Col>
                   <Button onClick={() => {
                     navigate("/register")
+                    console.log("Deneme")
                   }} color="primary" style={{ height: 35 }}>
 
                     Kayıt ol
