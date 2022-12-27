@@ -36,7 +36,7 @@ function CartPage() {
 
     const [selectedPaymentType, setSelectedPaymentType] = useState("");
     const [selectedAddress, setSelectedAddress] = useState("");
-
+    const [selectedCard, setSelectedCard] = useState("");
 
     return (
         <div style={{
@@ -113,13 +113,13 @@ function CartPage() {
                                     <form>
 
                                         <select
-                                        
-                                        value={selectedPaymentType}
+
+                                            value={selectedPaymentType}
                                             onChange={e =>
                                                 setSelectedPaymentType(e.target.value)
                                             }
-                                        
-                                        name="paymenttypes" className="comboboxStyle">
+
+                                            name="paymenttypes" className="comboboxStyle">
                                             <option value=""></option>
                                             <option value="kredi">Kredi</option>
                                             <option value="nakit">Nakit</option>
@@ -129,6 +129,42 @@ function CartPage() {
                                     </form>
                                 </div>
                             </div>
+
+                            <div className="comboboxBodyDivStyle">
+                                <h5>
+                                    Ödeme yapılacak kart:
+                                </h5>
+
+                                <form>
+
+                                    <select
+                                        value={selectedCard}
+                                        onChange={e =>
+                                            setSelectedCard(e.target.value)
+                                        }
+                                        name="cards"
+                                        className="comboboxStyle">
+                                        <option value=""></option>
+                                        <option value="psum dolor sit amet, co
+                                                    nsectetur adipiscing elit, sed do eiusmod tempor incid,
+                                                    idunt utillum dol">psum dolor sit amet, co
+                                            nsectetur adipiscing elit, sed do eiusmod tempor incid,
+                                            idunt utillum dol</option>
+                                        <option value="psum dolor sit amet, co
+                                                    nsectetur adipiscing elit, sed do eiusmod tempor incid,
+                                                    idunt utillum dol">psum dolor sit amet, co
+                                            nsectetur adipiscing elit, sed do eiusmod tempor incid,
+                                            idunt utillum dol</option>
+                                        <option value="psum dolor sit amet, co
+                                                    nsectetur adipiscing elit, sed do eiusmod tempor incid,
+                                                    idunt utillum dol">
+                                            psum dolor sit amet, co
+                                            nsectetur adipiscing elit, sed do eiusmod tempor incid,
+                                            idunt utillum dol</option>
+                                    </select>
+                                </form>
+                            </div>
+
 
                             <Button onClick={() => {
                                 console.log(selectedAddress);
