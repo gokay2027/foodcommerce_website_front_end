@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import {  useNavigate } from "react-router-dom";
+import React, { useRef, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import {
   Navbar,
   NavbarBrand,
@@ -17,9 +17,12 @@ import {
   CarouselCaption,
   Card,
   CardImg,
-  
+
 
 } from 'reactstrap';
+
+import Alert from 'react-popup-alert'
+import 'react-popup-alert/dist/index.css'
 
 
 const items = [
@@ -45,8 +48,41 @@ const items = [
 
 const tempdata = [1, 2, 3, 4, 5, 6,]
 
+
 function HomePage(args) {
+
+
+
+  const [alert, setAlert] = React.useState({
+    type: 'error',
+    text: 'This is a alert message',
+    show: false
+  })
+
+
+  function onCloseAlert() {
+    setAlert({
+      type: '',
+      text: '',
+      show: false
+    })
+  }
+
+
+  function onShowAlert(type) {
+    setAlert({
+      type: type,
+      text: 'Kullanıcı adını veya şifreyi hatalı girdiniz lütfen tekrar deneyin',
+      show: true
+    })
+  }
+
+
   const navigate = useNavigate();
+
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
@@ -90,6 +126,22 @@ function HomePage(args) {
 
   return (
     <div>
+
+      <Alert
+        header={'Hatalı giriş'}
+        btnText={'Kapat'}
+        text={alert.text}
+        type={alert.type}
+        show={alert.show}
+        onClosePress={onCloseAlert}
+        pressCloseOnOutsideClick={true}
+        showBorderBottom={true}
+        alertStyles={{ borderRadius: 20 }}
+        headerStyles={{ marginTop: 30 }}
+        textStyles={{ marginTop: 20 }}
+        buttonStyles={{ backgroundColor: "red" }}
+
+      />
       <div>
         <Navbar>
           <NavbarBrand className="topic" href="/">
@@ -100,18 +152,34 @@ function HomePage(args) {
             <Container>
               <Row>
                 <Col>
-                  <Input className="buttonRadius" style={{ height: 35 }} placeholder="Email"></Input>
+                  <Input
+                    value={emailValue} onInput={e => setEmailValue(e.target.value)}
+                    name="email" className="buttonRadius" style={{ height: 35 }} placeholder="Email"></Input>
                 </Col>
                 <Col>
                   <Input
+                    value={passwordValue} onInput={e => setPasswordValue(e.target.value)}
+                    name="password"
                     className="buttonRadius"
                     type="password" style={{ height: 35 }} placeholder="Şifre"></Input>
                 </Col>
                 <Col>
                   <Button onClick={() => {
 
-                    console.log("Giriş yap")
-                    navigate("/mainpage")
+
+                    if (emailValue.trim("").length == 0 || passwordValue.trim("").length == 0) {
+
+
+                      onShowAlert('warning');
+                      console.log("Yanlış girdi");
+                      
+                    }
+                    else {
+
+
+                      navigate("/mainpage")
+
+                    }
 
                   }} color="primary" style={{ height: 35 }}>
                     <div style={{ alignSelf: "center" }}>
@@ -170,7 +238,7 @@ function HomePage(args) {
           Popüler Restoranlarımız
         </h3>
         <div style={{ paddingRight: 20, paddingLeft: 20 }}>
-          <Container  fluid={true} >
+          <Container fluid={true} >
             <Row>
               {
                 tempdata.map((item) => {
@@ -185,12 +253,12 @@ function HomePage(args) {
                           src="https://picsum.photos/900/180"
                           style={{
                             height: 380,
-                            borderRadius:0
+                            borderRadius: 0
                           }}
                           top
                           width="100%"
                         />
-                        
+
                       </Card>
                     </Col>
                   )
@@ -204,8 +272,8 @@ function HomePage(args) {
       </div>
 
       {/* Footer div */}
-      
-      
+
+
       <div class="footer">
         <div class="contain">
           <div class="col">
@@ -257,7 +325,7 @@ function HomePage(args) {
               <li>Open ticket</li>
             </ul>
           </div>
-         
+
         </div>
       </div>
 

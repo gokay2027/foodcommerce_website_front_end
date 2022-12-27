@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
 
 import { Label, Input, FormGroup, Button, Col, Row, Form, Container } from "reactstrap";
 import "../Styles/registerComponent.css"
@@ -7,22 +8,39 @@ import backgroundimageurl from "../images/pizzaBackgroundRegister.jpeg";
 
 
 function RegisterPage() {
+
+    //Input kontrolü
+    const [nameValue, setNameValue] = useState('');
+    const [surnameValue, setSurnameValue] = useState('');
+    const [emailValue, setEmailValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
+    const [passwordAgainValue, setPasswordAgainValue] = useState('');
+    const [phoneNumberValue, setPhoneNumberValue] = useState('');
+    const [dateValue,setDateValue] = useState('');
+
+
+
+
+
+
+
+
     return (
         <div style={{
 
-            backgroundImage: `url(${backgroundimageurl})`, 
+            backgroundImage: `url(${backgroundimageurl})`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             width: '100vw',
             height: '100vh',
-            paddingRight:40,
-            
+            paddingRight: 40,
+
         }}>
             <div className='center inputDivStyle' >
                 <h1>Kayıt Ol</h1>
             </div>
-            <div style={{paddingLeft:30}}>
+            <div style={{ paddingLeft: 30 }}>
                 <Row>
                     <Col md={5}>
                     </Col>
@@ -33,10 +51,12 @@ function RegisterPage() {
                                 <Row>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label style={{fontWeight:"bold",fontSize:20}} for="nameinput">
+                                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="nameinput">
                                                 Name:
                                             </Label>
                                             <Input
+                                                value={nameValue}
+                                                onInput={e => setNameValue(e.target.value)}
                                                 id="nameinput"
                                                 name="name"
                                                 placeholder="Name"
@@ -45,10 +65,12 @@ function RegisterPage() {
                                     </Col>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label style={{fontWeight:"bold",fontSize:20}} for="surnameinput">
+                                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="surnameinput">
                                                 Surname:
                                             </Label>
                                             <Input
+                                                value={surnameValue}
+                                                onInput={e => setSurnameValue(e.target.value)}
                                                 id="surnameinput"
                                                 name="surname"
                                                 placeholder="Surname"
@@ -59,10 +81,12 @@ function RegisterPage() {
                                 <Row>
                                     <Col >
                                         <FormGroup>
-                                            <Label style={{fontWeight:"bold",fontSize:20}} for="emailinput">
+                                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="emailinput">
                                                 Email
                                             </Label>
                                             <Input
+                                                value={emailValue}
+                                                onInput={e => setEmailValue(e.target.value)}
                                                 id="emailinput"
                                                 name="email"
                                                 placeholder="E-mail"
@@ -76,10 +100,12 @@ function RegisterPage() {
                                 <Row>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label style={{fontWeight:"bold",fontSize:20}} for="passwordinput">
+                                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="passwordinput">
                                                 Password:
                                             </Label>
                                             <Input
+                                                value={passwordValue}
+                                                onInput={e => setPasswordValue(e.target.value)}
                                                 id="passwordinput"
                                                 name="password"
                                                 placeholder="Password"
@@ -89,10 +115,12 @@ function RegisterPage() {
                                     </Col>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label style={{fontWeight:"bold",fontSize:20}} for="passwordinputagain">
+                                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="passwordinputagain">
                                                 Password Again:
                                             </Label>
                                             <Input
+                                                value={passwordAgainValue}
+                                                onInput={e => setPasswordAgainValue(e.target.value)}
                                                 id="passwordinputagain"
                                                 name="password"
                                                 placeholder="Password again"
@@ -105,10 +133,12 @@ function RegisterPage() {
                                 <Row>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label style={{fontWeight:"bold",fontSize:20}} for="dateinput">
+                                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="dateinput">
                                                 Date
                                             </Label>
                                             <Input
+                                                value={dateValue}
+                                                onInput={e => setDateValue(e.target.value)}
                                                 id="dateinput"
                                                 name="date"
                                                 placeholder="Date"
@@ -118,19 +148,21 @@ function RegisterPage() {
                                     </Col>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label style={{fontWeight:"bold",fontSize:20}} for="phoneinput">
+                                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="phoneinput">
                                                 Phone number
                                             </Label>
                                             <Input
+                                            value={phoneNumberValue}
+                                            onInput={e => setPhoneNumberValue(e.target.value)}
                                                 id="phoneinput"
-                                                
+
                                                 placeholder="Phone Number"
 
                                             />
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                
+
                                 <FormGroup check>
                                     <Input
                                         id="exampleCheck"
@@ -146,15 +178,25 @@ function RegisterPage() {
                                 </FormGroup>
                             </Form>
                         </Container>
-                        <Container  className='center'>
-                            <Button onClick={()=>{
+                        <Container className='center'>
+                            <Button onClick={() => {
+
+                                console.log(nameValue)
+                                console.log(surnameValue)
+                                console.log(emailValue)
+                                console.log(passwordValue)
+                                console.log(passwordAgainValue)
+                                console.log(phoneNumberValue)
+                                console.log(dateValue)
+
+
                                 console.log("Kayıt ol")
-                            }}  color='primary' className='signUpButton' style={{fontWeight:"bold",fontSize:20}}>
+                            }} color='primary' className='signUpButton' style={{ fontWeight: "bold", fontSize: 20 }}>
                                 Sign Up
                             </Button>
                         </Container>
                     </Col>
-                    
+
                 </Row>
             </div>
         </div>

@@ -4,6 +4,7 @@ import "../Styles/cartStyle.css"
 import backgroundimageurl from "../images/cartBackground.jpg";
 import NavBarRoute from "./NavbarRoute";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useState } from "react";
 
 const foodCartInformation = [
     { name: "Mc chicken", price: 15, size: "Büyük" },
@@ -33,6 +34,10 @@ const sum = foodCartInformation.reduce((accumulator, object) => {
 
 function CartPage() {
 
+    const [selectedPaymentType, setSelectedPaymentType] = useState("");
+    const [selectedAddress, setSelectedAddress] = useState("");
+
+
     return (
         <div style={{
             backgroundImage: `url(${backgroundimageurl})`,
@@ -45,155 +50,180 @@ function CartPage() {
         }} className="backgroundStyle">
             <NavBarRoute></NavBarRoute>
             <div>
-                
-                    <Container className="containerLayoutStyle">
-                        <Row>
-                            <Col>
-                                <div>
-                                    <h2>
-                                        Bilgiler
-                                    </h2>
 
-                                    <p className="nameDivStyle">
-                                        <h4>
-                                            İsim Soyisim:
-                                        </h4>
+                <Container className="containerLayoutStyle">
+                    <Row>
+                        <Col>
+                            <div>
+                                <h2>
+                                    Bilgiler
+                                </h2>
 
-                                        <h5 style={{ marginLeft: 5 }}>
-                                            Gökay Dinç
-                                        </h5>
+                                <p className="nameDivStyle">
+                                    <h4>
+                                        İsim Soyisim:
+                                    </h4>
 
-                                    </p>
+                                    <h5 style={{ marginLeft: 5 }}>
+                                        Gökay Dinç
+                                    </h5>
 
-                                    <div className="comboboxBodyDivStyle">
-                                        <h5>
-                                            Adres Seçiniz:
-                                        </h5>
+                                </p>
 
-                                        <form>
+                                <div className="comboboxBodyDivStyle">
+                                    <h5>
+                                        Adres Seçiniz:
+                                    </h5>
 
-                                            <select name="adresses" className="comboboxStyle">
-                                                <option value="adres1">psum dolor sit amet, co
+                                    <form>
+
+                                        <select
+                                            value={selectedAddress}
+                                            onChange={e =>
+                                                setSelectedAddress(e.target.value)
+                                            }
+                                            name="adresses"
+                                            className="comboboxStyle">
+                                            <option value=""></option>
+                                            <option value="psum dolor sit amet, co
                                                     nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                    idunt utillum dol</option>
-                                                <option value="adres2">psum dolor sit amet, co
+                                                    idunt utillum dol">psum dolor sit amet, co
+                                                nsectetur adipiscing elit, sed do eiusmod tempor incid,
+                                                idunt utillum dol</option>
+                                            <option value="psum dolor sit amet, co
                                                     nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                    idunt utillum dol</option>
-                                                <option value="adres3">psum dolor sit amet, co
+                                                    idunt utillum dol">psum dolor sit amet, co
+                                                nsectetur adipiscing elit, sed do eiusmod tempor incid,
+                                                idunt utillum dol</option>
+                                            <option value="psum dolor sit amet, co
                                                     nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                    idunt utillum dol</option>
-                                            </select>
-                                        </form>
-                                    </div>
-
-                                    <div className="comboboxBodyDivStyle">
-                                        <h5>
-                                            Ödeme tipi seçiniz:
-                                        </h5>
-
-                                        <form>
-
-                                            <select name="paymenttypes" className="comboboxStyle">
-                                                <option value="kredi">Kredi</option>
-                                                <option value="nakit">Nakit</option>
-                                                <option value="havale">Havale</option>
-                                                <option value="kapıda">Kapıda</option>
-                                            </select>
-                                        </form>
-                                    </div>
+                                                    idunt utillum dol">
+                                                psum dolor sit amet, co
+                                                nsectetur adipiscing elit, sed do eiusmod tempor incid,
+                                                idunt utillum dol</option>
+                                        </select>
+                                    </form>
                                 </div>
 
-                                <Button className="buttonLayout btn-custom btn-primary" color="primary">Sipariş Ver</Button>
+                                <div className="comboboxBodyDivStyle">
+                                    <h5>
+                                        Ödeme tipi seçiniz:
+                                    </h5>
 
-                                <div className="priceDivBodyStyle">
-                                    <h3>
-                                        Toplam: {sum} ₺
-                                    </h3>
+                                    <form>
 
+                                        <select
+                                        
+                                        value={selectedPaymentType}
+                                            onChange={e =>
+                                                setSelectedPaymentType(e.target.value)
+                                            }
+                                        
+                                        name="paymenttypes" className="comboboxStyle">
+                                            <option value=""></option>
+                                            <option value="kredi">Kredi</option>
+                                            <option value="nakit">Nakit</option>
+                                            <option value="havale">Havale</option>
+                                            <option value="kapıda">Kapıda</option>
+                                        </select>
+                                    </form>
                                 </div>
+                            </div>
 
-                            </Col>
+                            <Button onClick={() => {
+                                console.log(selectedAddress);
+                                console.log(selectedPaymentType);
+                            }} className="buttonLayout btn-custom btn-primary" color="primary">Sipariş Ver</Button>
 
-                            <Col>
-                                <div>
-                                    <h3>
-                                        Sipariş Listesi:
-                                    </h3>
-                                    <div style={{
-                                        height: 400,
-                                        width: 700,
-                                        overflowY: 'auto'
-                                    }}>
-                                        <Table bordered height="200"
+                            <div className="priceDivBodyStyle">
+                                <h3>
+                                    Toplam: {sum} ₺
+                                </h3>
 
-                                        >
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        #
-                                                    </th>
-                                                    <th>
-                                                        Food Name
-                                                    </th>
-                                                    <th>
-                                                        Size
-                                                    </th>
-                                                    <th>
-                                                        Price
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    foodCartInformation.map((item, index) => {
-                                                        return (
-                                                            <tr>
-                                                                <th scope="row">
-                                                                    {index + 1}
-                                                                </th>
-                                                                <td>
-                                                                    {
-                                                                        item.name
-                                                                    }
-                                                                </td>
-                                                                <td>
-                                                                    {
-                                                                        item.size
-                                                                    }
-                                                                </td>
-                                                                <td>
-                                                                    {
-                                                                        item.price
-                                                                    }
+                            </div>
 
-                                                                </td>
-                                                                <td className="alignTdItem">
+                        </Col>
 
-                                                                    <Button color="danger">
-                                                                        <RiDeleteBin6Fill></RiDeleteBin6Fill>
-                                                                    </Button>
+                        <Col>
+                            <div>
+                                <h3>
+                                    Sipariş Listesi:
+                                </h3>
+                                <div style={{
+                                    height: 400,
+                                    width: 700,
+                                    overflowY: 'auto'
+                                }}>
+                                    <Table bordered height="200"
 
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    })
-                                                }
+                                    >
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    Food Name
+                                                </th>
+                                                <th>
+                                                    Size
+                                                </th>
+                                                <th>
+                                                    Price
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                foodCartInformation.map((item, index) => {
+                                                    return (
+                                                        <tr>
+                                                            <th scope="row">
+                                                                {index + 1}
+                                                            </th>
+                                                            <td>
+                                                                {
+                                                                    item.name
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                {
+                                                                    item.size
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                {
+                                                                    item.price
+                                                                }
 
-                                            </tbody>
-                                        </Table>
-                                    </div>
+                                                            </td>
+                                                            <td className="alignTdItem">
+
+                                                                <Button color="danger">
+                                                                    <RiDeleteBin6Fill></RiDeleteBin6Fill>
+                                                                </Button>
+
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+
+                                        </tbody>
+                                    </Table>
                                 </div>
+                            </div>
 
-                            </Col>
-
-
-
-
-                        </Row>
+                        </Col>
 
 
-                    </Container>
-                
+
+
+                    </Row>
+
+
+                </Container>
+
 
 
                 <div className="bonapetitDiv">
