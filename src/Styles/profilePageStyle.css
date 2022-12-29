@@ -1,14 +1,39 @@
 .pageLayoutDivStyle{
     margin-left: 2%;
     margin-right: 2%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
 }
 
 .basicInformationDivStyle{
-
+    margin-bottom: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
+    padding:10px;
+    border-radius: 10px;
+    background-color: white;
 }
 
 .orderHistoryDivStyle{
     margin-top: 20px;
     margin-left: 2%;
     margin-right: 2%;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
 }
+
+.button1 {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.backgroundImageStyleDiv {
+    
+    background-image: url("../images/foodbackground.jpg");
+    min-width: 100%;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+  }
+

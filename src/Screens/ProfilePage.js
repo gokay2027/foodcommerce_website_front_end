@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Row, Col, Form, FormGroup, Label, Input, Table, Button, Card, CardTitle } from 'reactstrap';
+import { Row, Col, Form, FormGroup, Label, Input, Table, Button, Card, CardTitle, Container } from 'reactstrap';
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import Alert from 'react-popup-alert'
 import 'react-popup-alert/dist/index.css'
@@ -29,17 +29,86 @@ function ProfilePage() {
     //Adress requestbody olarak card ise request param olarak kullanılıyor user id lazım
 
     return (
-        <div>
+        <div
+            className='backgroundImageStyleDiv'
+        >
 
             <NavBarRoute></NavBarRoute>
 
-            <div className='basicInformationDivStyle'>
+            <div className='basicInformationDivStyle button1'>
 
+
+                <Row>
+                    <Col>
+                        <FormGroup>
+                            <Label style={{ fontWeight: "bold", fontSize: 20 }}
+
+                                for="nameinput">
+
+                                İsim:
+                            </Label>
+                            <Input
+                                defaultValue={"Gökay"}
+                                id="nameinput"
+                                name="name"
+                                placeholder="Name"
+                            />
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="nameinput">
+                                Soyisim:
+                            </Label>
+                            <Input
+                                defaultValue={"Dinç"}
+                                id="nameinput"
+                                name="name"
+                                placeholder="Name"
+                            />
+                        </FormGroup>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col>
+                        <FormGroup>
+                            <Label style={{ fontWeight: "bold", fontSize: 20 }}
+
+                                for="nameinput">
+
+                                New password:
+                            </Label>
+                            <Input
+                                defaultValue={"Gökay"}
+                                id="nameinput"
+                                name="name"
+                                placeholder="Name"
+                                type='password'
+                            />
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="nameinput">
+                                New Password Again:
+                            </Label>
+                            <Input
+                                defaultValue={"Dinç"}
+                                id="nameinput"
+                                name="name"
+                                placeholder="Name"
+                                type='password'
+                            />
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Button className='changeInformationButtonStyle'> Bilgileri değiştir </Button>
 
 
             </div>
 
-            <div className='pageLayoutDivStyle'>
+            <div className='pageLayoutDivStyle button1'>
 
                 <Row>
                     <Col xl={3}>
@@ -112,6 +181,7 @@ function ProfilePage() {
 
 
                         </Form>
+                        <Button style={{ marginBottom: 10 }}>Kart Ekle</Button>
                     </Col>
                     <Col xl={3}>
                         <div>
@@ -258,12 +328,7 @@ function ProfilePage() {
                                     </FormGroup>
                                 </Col>
                             </Row>
-                            <Row>
-
-
-                            </Row>
-
-
+                            <Button style={{ marginBottom: 10 }}>Adres Ekle</Button>
                         </Form>
                     </Col>
                     <Col xl={3}>
@@ -338,7 +403,7 @@ function ProfilePage() {
                 </Row>
             </div>
 
-            <div className='orderHistoryDivStyle'>
+            <div className='orderHistoryDivStyle button1'>
 
                 <h3>
                     Sipariş Geçmişi:
@@ -346,9 +411,7 @@ function ProfilePage() {
                 {/* Card componenti içinde sipariş geçmişinin gösterileceği component oluşturulacak */}
                 {/* Food name - Price - Size - Adress (Stringler birleştirilecek)  */}
                 <Card>
-                    <Table bordered height="200"
-
-                    >
+                    <Table bordered height="200">
                         <thead>
                             <tr>
                                 <th>
@@ -398,7 +461,7 @@ function ProfilePage() {
                                                 }
 
                                             </td>
-                                            
+
                                         </tr>
                                     )
                                 })
@@ -407,8 +470,6 @@ function ProfilePage() {
                         </tbody>
                     </Table>
                 </Card>
-
-
             </div>
 
 
