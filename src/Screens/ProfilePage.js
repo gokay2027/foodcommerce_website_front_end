@@ -35,7 +35,7 @@ function ProfilePage() {
 
             <div className='basicInformationDivStyle'>
 
-                
+
 
             </div>
 
@@ -336,6 +336,79 @@ function ProfilePage() {
                     </Col>
 
                 </Row>
+            </div>
+
+            <div className='orderHistoryDivStyle'>
+
+                <h3>
+                    Sipariş Geçmişi:
+                </h3>
+                {/* Card componenti içinde sipariş geçmişinin gösterileceği component oluşturulacak */}
+                {/* Food name - Price - Size - Adress (Stringler birleştirilecek)  */}
+                <Card>
+                    <Table bordered height="200"
+
+                    >
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Food Name
+                                </th>
+                                <th>
+                                    Size
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Adres
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                foodCartInformation.map((item, index) => {
+                                    return (
+                                        <tr>
+                                            <th scope="row">
+                                                {index + 1}
+                                            </th>
+                                            <td>
+                                                {
+                                                    item.name
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    item.size
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    item.price
+                                                }
+
+                                            </td>
+                                            <td>
+                                                {
+                                                    item.price
+                                                }
+
+                                            </td>
+                                            
+                                        </tr>
+                                    )
+                                })
+                            }
+
+                        </tbody>
+                    </Table>
+                </Card>
+
+
             </div>
 
 
