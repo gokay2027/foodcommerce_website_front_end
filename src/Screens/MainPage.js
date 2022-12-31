@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
     Container, Row, DropdownItem, UncontrolledDropdown, DropdownToggle, DropdownMenu,
     Col,
@@ -9,7 +10,7 @@ import {
 
 } from "reactstrap";
 import NavBarRoute from "./NavbarRoute";
-
+import axios from 'axios';
 import "../Styles/mainpageStyle.css"
 import backgroundimageurl from "../images/foodbackground.jpg";
 const data = ["Döner", "Kebap", "Çorba", "Hamburger", "İçecek", "Tatlı"]
@@ -17,7 +18,25 @@ const data = ["Döner", "Kebap", "Çorba", "Hamburger", "İçecek", "Tatlı"]
 const cardData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 
+
+
+
 function MainPage() {
+
+    const [restaurants, setRestaurants] = useState([]);
+
+
+    const res = axios.get("http://localhost:8080/restaurant/getall");
+
+    useEffect(() => {
+
+        res.then((data) => {
+            setRestaurants(data.data["data"]);
+        });
+
+        
+    }, []);
+
 
     const navigate = useNavigate();
 
@@ -65,13 +84,13 @@ function MainPage() {
                 <Container fluid>
                     <Row>
                         {
-                            cardData.map((item) => {
+                            restaurants.map((item) => {
                                 return (
                                     <Col
                                         xl={4}
                                         md={6}
                                         xs={12}>
-
+                                            
                                         <Card
 
                                             onClick={() => {

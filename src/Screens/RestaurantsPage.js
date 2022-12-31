@@ -1,6 +1,7 @@
 
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
     Container, Row, DropdownItem, UncontrolledDropdown, DropdownToggle, DropdownMenu,
     Col,
@@ -11,17 +12,25 @@ import {
 
 } from "reactstrap";
 import NavBarRoute from "./NavbarRoute";
-
 import "../Styles/mainpageStyle.css"
+import axios from 'axios';
 
-const data = ["Döner", "Kebap", "Çorba", "Hamburger", "İçecek", "Tatlı"]
 
 const cardData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 
+
 function RestaurantsPage() {
 
+
+
     const navigate = useNavigate();
+
+    const {state} = useLocation();
+    const {id,cateogryName} = state;
+    
+    console.log(state.id +" bu iddur uşak")
+    console.log(state.cateogryName + " bu da o kategorinin adudur uşak")
 
     return (
         <div className="backgroundImageStyle">
@@ -32,7 +41,7 @@ function RestaurantsPage() {
                 <div >
                     <div className="titleDivStyle">
                         <h1 style={{ fontWeight: "bold", textAlign: "center" }}>
-                            Restoranlar (Kategori Adı)
+                            Restoranlar ({state.cateogryName})
                         </h1>
                     </div>
                 </div>
