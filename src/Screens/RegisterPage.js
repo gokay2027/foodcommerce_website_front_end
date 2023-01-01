@@ -86,9 +86,6 @@ function RegisterPage() {
 
             />
 
-
-
-
             <div className='center inputDivStyle' >
                 <h1>Kayıt Ol</h1>
             </div>

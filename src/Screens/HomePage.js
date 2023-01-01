@@ -1,6 +1,7 @@
 
 import React, { useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   Navbar,
   NavbarBrand,
@@ -177,7 +178,18 @@ function HomePage(args) {
                     else {
 
 
-                      navigate("/mainpage")
+
+                      axios.get("http://localhost:8080/user/login",{
+                        params:{
+                          email:emailValue,
+                          password:passwordValue
+                        }
+                      }).then((data)=>{
+                          console.log(data.data)
+                      });
+
+
+                      //navigate("/mainpage")
 
                     }
 
