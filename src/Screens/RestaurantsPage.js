@@ -19,9 +19,6 @@ import axios from 'axios';
 const cardData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 
-
-
-
 function RestaurantsPage() {
 
     const navigate = useNavigate();
@@ -70,7 +67,7 @@ function RestaurantsPage() {
                 <Container fluid>
                     <Row>
                         {
-                            cardData.map((item) => {
+                            restaurants.map((item) => {
                                 return (
                                     <Col
                                         xl={4}
@@ -78,7 +75,6 @@ function RestaurantsPage() {
                                         xs={12}>
 
                                         <Card
-
                                             onClick={() => {
                                                 navigate("/restaurantpage");
                                             }}
@@ -97,7 +93,7 @@ function RestaurantsPage() {
                                             <CardBody>
                                                 <CardTitle>
                                                     <h4 className="cardTitleStyle">
-                                                        McDonalds
+                                                        {item["name"]}
                                                     </h4>
                                                 </CardTitle>
                                             </CardBody>
