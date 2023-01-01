@@ -1,10 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import React, {  useState } from 'react';
+
+import axios from 'axios';
 
 import { Label, Input, FormGroup, Button, Col, Row, Form, Container } from "reactstrap";
 import "../Styles/registerComponent.css"
 
 import backgroundimageurl from "../images/pizzaBackgroundRegister.jpeg";
+
+import Alert from 'react-popup-alert'
+import 'react-popup-alert/dist/index.css'
 
 
 function RegisterPage() {
@@ -16,12 +21,39 @@ function RegisterPage() {
     const [passwordValue, setPasswordValue] = useState('');
     const [passwordAgainValue, setPasswordAgainValue] = useState('');
     const [phoneNumberValue, setPhoneNumberValue] = useState('');
-    const [dateValue,setDateValue] = useState('');
+    const [dateValue, setDateValue] = useState('');
+
+    const [alert, setAlert] = React.useState({
+        type: 'error',
+        text: 'This is a alert message',
+        show: false
+    })
 
 
+    function onCloseAlert() {
+        setAlert({
+            type: '',
+            text: '',
+            show: false
+        })
+    }
 
 
+    function onShowAlert(type) {
+        setAlert({
+            type: type,
+            text: 'Bazı alanları boş bıraktınız lütfen kontrol ediniz',
+            show: true
+        })
+    }
 
+    function onShowAlertSuccess() {
+        setAlert({
+            type: "success",
+            text: 'Kaydınız başarı ile yapıldı',
+            show: true
+        })
+    }
 
 
 
@@ -37,6 +69,26 @@ function RegisterPage() {
             paddingRight: 40,
 
         }}>
+
+            <Alert
+                header={'Hatalı giriş'}
+                btnText={'Kapat'}
+                text={alert.text}
+                type={alert.type}
+                show={alert.show}
+                onClosePress={onCloseAlert}
+                pressCloseOnOutsideClick={true}
+                showBorderBottom={true}
+                alertStyles={{ borderRadius: 20 }}
+                headerStyles={{ marginTop: 30 }}
+                textStyles={{ marginTop: 20 }}
+                buttonStyles={{  }}
+
+            />
+
+
+
+
             <div className='center inputDivStyle' >
                 <h1>Kayıt Ol</h1>
             </div>
@@ -152,8 +204,8 @@ function RegisterPage() {
                                                 Phone number
                                             </Label>
                                             <Input
-                                            value={phoneNumberValue}
-                                            onInput={e => setPhoneNumberValue(e.target.value)}
+                                                value={phoneNumberValue}
+                                                onInput={e => setPhoneNumberValue(e.target.value)}
                                                 id="phoneinput"
 
                                                 placeholder="Phone Number"
@@ -181,6 +233,36 @@ function RegisterPage() {
                         <Container className='center'>
                             <Button onClick={() => {
 
+
+
+                                if (nameValue.trim() === "" || surnameValue.trim() === "" || emailValue.trim() === "" ||
+                                    passwordValue.trim() === "" || passwordAgainValue.trim() === "" || phoneNumberValue.trim() === "" || dateValue.trim() === "") {
+
+
+                                        onShowAlert('error');
+
+                                }
+                                else {
+                                    axios.post("http://localhost:8080/user/register", null, {
+                                        params: {
+                                            birthDate: dateValue,
+                                            email: emailValue,
+                                            name: nameValue,
+                                            password: passwordValue,
+                                            phoneNumber: phoneNumberValue,
+                                            surname: surnameValue
+                                        }
+                                    }).then(() => {
+                                        onShowAlertSuccess();
+                                    }).catch((error)=>{
+
+                                        console.log(error);
+                                    
+                                    });
+                                }
+
+
+
                                 console.log(nameValue)
                                 console.log(surnameValue)
                                 console.log(emailValue)
@@ -190,7 +272,7 @@ function RegisterPage() {
                                 console.log(dateValue)
 
 
-                                console.log("Kayıt ol")
+
                             }} color='primary' className='signUpButton' style={{ fontWeight: "bold", fontSize: 20 }}>
                                 Sign Up
                             </Button>
