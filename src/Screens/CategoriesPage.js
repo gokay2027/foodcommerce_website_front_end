@@ -13,13 +13,14 @@ export default function CateogoriesPage() {
 
 
     const [categories, setCategories] = useState([]);
-    
-    
+
     const res = axios.get("http://localhost:8080/category/getAll");
 
     useEffect(() => {
         res.then((data) => {
+        
             setCategories(data.data["data"]);
+        
         });
     },
     []);

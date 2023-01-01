@@ -16,21 +16,40 @@ import "../Styles/mainpageStyle.css"
 import axios from 'axios';
 
 
-const cardData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+const cardData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
+
 
 
 
 function RestaurantsPage() {
 
-
-
     const navigate = useNavigate();
 
-    const {state} = useLocation();
-    const {id,cateogryName} = state;
-    
-    console.log(state.id +" bu iddur uşak")
-    console.log(state.cateogryName + " bu da o kategorinin adudur uşak")
+    const { state } = useLocation();
+    const { id, cateogryName } = state;
+
+    console.log(id);
+    console.log(cateogryName);
+
+    const [restaurants, setRestaurants] = useState([]);
+
+
+    const res = axios.get("http://localhost:8080//restaurant/getRestaurantsByCategory",
+        {
+            params: {
+                categoryName: cateogryName
+            }
+        })
+
+
+    useEffect(() => {
+        res.then((data) => {
+            setRestaurants(data.data.data);
+        })
+    }, [])
+
+    console.log(restaurants);
 
     return (
         <div className="backgroundImageStyle">
