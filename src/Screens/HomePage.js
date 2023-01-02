@@ -71,6 +71,13 @@ function HomePage(args) {
   const [stateUser, setUser] = useState(null);
 
 
+  useEffect(()=>{
+    if(stateUser!=null){
+      navigate("mainpage");
+    }
+  },[stateUser])
+
+
   const [alert, setAlert] = React.useState({
     type: 'error',
     text: 'This is a alert message',
@@ -132,12 +139,8 @@ function HomePage(args) {
   });
 
 
-
-
-
   return (
     <div>
-
       <Alert
         header={'Hatalı giriş'}
         btnText={'Kapat'}
@@ -185,16 +188,17 @@ function HomePage(args) {
 
                     }
                     else {
-                      axios.get("http://localhost:8080/user/login", {
+                      let res = axios.get("http://localhost:8080/user/login", {
                         params: {
                           email: emailValue,
                           password: passwordValue
                         }
                       })
-                        .then((data) => {
-                          setUser(data.data.data);
-                          console.log("Setledim");
-
+                      res.then((data) => {
+                        setUser(data.data.data);
+                        console.log("Setledim");
+                      })
+                        .finally(() => {
                           if (stateUser === null) {
 
                             onShowAlert("error");
@@ -215,11 +219,17 @@ function HomePage(args) {
                             navigate("/mainpage");
 
                           }
-                        }
-                        )
+                        })
+
+
+
+
+
+
                     }
 
-                  }} color="primary" style={{ height: 35 }}>
+                  }
+                  } color="primary" style={{ height: 35 }}>
                     <div style={{ alignSelf: "center" }}>
                       Giriş yap
                     </div>
