@@ -1,5 +1,5 @@
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -24,6 +24,9 @@ import {
 
 import Alert from 'react-popup-alert'
 import 'react-popup-alert/dist/index.css'
+import { CurrentUser } from '../globalData/user';
+
+
 
 
 const items = [
@@ -49,9 +52,23 @@ const items = [
 
 const tempdata = [1, 2, 3, 4, 5, 6,]
 
+export let currentUser;
+
+
+
 
 function HomePage(args) {
 
+  const navigate = useNavigate();
+
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  const [stateUser, setUser] = useState(null);
 
 
   const [alert, setAlert] = React.useState({
@@ -79,14 +96,7 @@ function HomePage(args) {
   }
 
 
-  const navigate = useNavigate();
 
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
-
-
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
 
   const next = () => {
     if (animating) return;
@@ -168,29 +178,45 @@ function HomePage(args) {
                   <Button onClick={() => {
 
 
-                    if (emailValue.trim("").length == 0 || passwordValue.trim("").length == 0) {
-
+                    if (emailValue.trim("").length === 0 || passwordValue.trim("").length === 0) {
 
                       onShowAlert('warning');
                       console.log("Yanlış girdi");
-                      
+
                     }
                     else {
-
-
-
-                      axios.get("http://localhost:8080/user/login",{
-                        params:{
-                          email:emailValue,
-                          password:passwordValue
+                      axios.get("http://localhost:8080/user/login", {
+                        params: {
+                          email: emailValue,
+                          password: passwordValue
                         }
-                      }).then((data)=>{
-                          console.log(data.data)
-                      });
+                      })
+                        .then((data) => {
+                          setUser(data.data.data);
+                          console.log("Setledim");
 
+                          if (stateUser === null) {
 
-                      //navigate("/mainpage")
+                            onShowAlert("error");
 
+                          }
+                          else {
+
+                            console.log(stateUser);
+                            currentUser = new CurrentUser(
+                              stateUser.id,
+                              stateUser.name,
+                              stateUser.surname,
+                              stateUser.email,
+                              stateUser.birthDate,
+                              stateUser.phoneNumber,
+                            );
+                            console.log(currentUser);
+                            navigate("/mainpage");
+
+                          }
+                        }
+                        )
                     }
 
                   }} color="primary" style={{ height: 35 }}>
