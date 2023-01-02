@@ -111,7 +111,7 @@ function MainPage() {
                                             <CardBody>
                                                 <CardTitle>
                                                     <h4 className="cardTitleStyle">
-                                                        McDonalds
+                                                        {item.name}
                                                     </h4>
                                                 </CardTitle>
                                             </CardBody>

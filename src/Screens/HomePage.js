@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -24,7 +24,7 @@ import {
 
 import Alert from 'react-popup-alert'
 import 'react-popup-alert/dist/index.css'
-import { CurrentUser } from '../globalData/user';
+
 
 
 
@@ -50,9 +50,11 @@ const items = [
   },
 ];
 
-const tempdata = [1, 2, 3, 4, 5, 6,]
+const tempdata = [1, 2, 3, 4, 5, 6,];
 
-export let currentUser;
+
+
+
 
 
 
@@ -71,11 +73,18 @@ function HomePage(args) {
   const [stateUser, setUser] = useState(null);
 
 
-  useEffect(()=>{
-    if(stateUser!=null){
-      navigate("mainpage");
+  useEffect(() => {
+    if (stateUser != null) {
+      
+      sessionStorage.setItem("userId",stateUser.id);
+      sessionStorage.setItem("userName",stateUser.name);
+      sessionStorage.setItem("userEmail",stateUser.email);
+      sessionStorage.setItem("userPassword",stateUser.password);
+      
+      console.log(stateUser);
+      navigate("/mainpage");
     }
-  },[stateUser])
+  }, [stateUser]);
 
 
   const [alert, setAlert] = React.useState({
@@ -101,9 +110,6 @@ function HomePage(args) {
       show: true
     })
   }
-
-
-
 
   const next = () => {
     if (animating) return;
@@ -196,7 +202,6 @@ function HomePage(args) {
                       })
                       res.then((data) => {
                         setUser(data.data.data);
-                        console.log("Setledim");
                       })
                         .finally(() => {
                           if (stateUser === null) {
@@ -204,28 +209,7 @@ function HomePage(args) {
                             onShowAlert("error");
 
                           }
-                          else {
-
-                            console.log(stateUser);
-                            currentUser = new CurrentUser(
-                              stateUser.id,
-                              stateUser.name,
-                              stateUser.surname,
-                              stateUser.email,
-                              stateUser.birthDate,
-                              stateUser.phoneNumber,
-                            );
-                            console.log(currentUser);
-                            navigate("/mainpage");
-
-                          }
                         })
-
-
-
-
-
-
                     }
 
                   }
