@@ -25,6 +25,12 @@ function CartPage() {
     const [paymenttypes, setPaymentTypes] = useState([]);
 
 
+
+    const [cart,setCart] = useState(userCart);
+
+    const [trigger,setTrigger]=useState(false);
+
+
     useEffect(() => {
         axios.get("http://localhost:8080/user/getcards", {
             params: {
@@ -57,17 +63,15 @@ function CartPage() {
             setPaymentTypes(data.data.data);
             console.log(data.data.data);
         })
-
-
     }, [])
 
-
-
-
-
-
-
-
+    useEffect(()=>{
+        if(trigger===true){
+            setCart(userCart);
+            console.log("tetiklendim")
+            setTrigger(false);
+        }
+    },[trigger])
 
     return (
         <div style={{
@@ -191,13 +195,13 @@ function CartPage() {
                                     console.log("Payment Type Id: " + selectedPaymentType);
                                     console.log("Selected Card id: " + selectedCard);
 
-                                    for(let i =0;i<userCart.length;i++){
+                                    for(let i =0;i<cart.length;i++){
                                         
 
                                         axios.post("http://localhost:8080/order/neworder",null,{
                                             params:{
 
-                                                foodId:userCart[i].foodId,
+                                                foodId:cart[i].foodId,
                                                 paymentId:selectedPaymentType,
                                                 userAdressId:selectedAddress,
                                                 userId:userid
@@ -255,7 +259,7 @@ function CartPage() {
                                         </thead>
                                         <tbody>
                                             {
-                                                userCart.map((item, index) => {
+                                                cart.map((item, index) => {
                                                     return (
                                                         <tr>
                                                             <th scope="row">
@@ -279,7 +283,16 @@ function CartPage() {
                                                             </td>
                                                             <td className="alignTdItem">
 
-                                                                <Button color="danger">
+                                                                <Button
+                                                                
+                                                                onClick={()=>{
+
+                                                                    console.log("Bu indexteki item silinecek " + index);
+                                                                    userCart.splice(index,1);
+                                                                    setTrigger(true);
+
+                                                                }}
+                                                                color="danger">
                                                                     <RiDeleteBin6Fill></RiDeleteBin6Fill>
                                                                 </Button>
 

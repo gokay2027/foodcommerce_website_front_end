@@ -46,6 +46,12 @@ function ProfilePage() {
     const [addresses, setAdresses] = useState([]);
 
 
+    //Triggers
+    const [cardTrigger,setCardTrigger] = useState(false);
+    const [addressTrigger,setAddressTrigger]=useState(false);
+
+    
+
 
     //input default value
     const [inputDefaultName, setInputDefaultName] = useState("");
