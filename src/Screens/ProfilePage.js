@@ -47,10 +47,10 @@ function ProfilePage() {
 
 
     //Triggers
-    const [cardTrigger,setCardTrigger] = useState(false);
-    const [addressTrigger,setAddressTrigger]=useState(false);
+    const [cardTrigger, setCardTrigger] = useState(true);
+    const [addressTrigger, setAddressTrigger] = useState(true);
 
-    
+
 
 
     //input default value
@@ -130,37 +130,38 @@ function ProfilePage() {
 
 
 
-     useEffect(() => {
+    useEffect(() => {
 
-         if (cards.length === 0) {
-             axios.get("http://localhost:8080/user/getcards", {
-                 params: {
-                     id: userid,
-                 }
-             }).then((data) => {
-                 setCards(data.data.data);
-
-                 console.log("deneme")
-
-             });
-         }
-
-     }, [cards])
+        if (cardTrigger === true) {
+            axios.get("http://localhost:8080/user/getcards", {
+                params: {
+                    id: userid,
+                }
+            }).then((data) => {
+                setCards(data.data.data);
+                setCardTrigger(false)
 
 
-     useEffect(() => {
+            });
+        }
 
-         if (addresses.length === 0) {
-             axios.get("http://localhost:8080/user/getuseradresses", {
-                 params: {
-                     id: userid,
-                 }
-             })
-                 .then((data) => {
-                     setAdresses(data.data.data);
-                 })
-         }
-     }, [addresses])
+    }, [cardTrigger])
+
+
+    useEffect(() => {
+
+        if (addressTrigger === true) {
+            axios.get("http://localhost:8080/user/getuseradresses", {
+                params: {
+                    id: userid,
+                }
+            })
+                .then((data) => {
+                    setAdresses(data.data.data);
+                    setAddressTrigger(false);
+                })
+        }
+    }, [addressTrigger])
 
 
 
@@ -420,7 +421,7 @@ function ProfilePage() {
                                 })
                                     .then(() => {
                                         console.log("Kart eklendi!!");
-                                        setCards([]);
+                                        setAddressTrigger(true);
                                     })
 
                             }
@@ -499,7 +500,7 @@ function ProfilePage() {
                                                                         }
                                                                     }).then(
                                                                         () => {
-                                                                            setCards([]);
+                                                                            setCardTrigger(true);
                                                                         }
                                                                     )
 
