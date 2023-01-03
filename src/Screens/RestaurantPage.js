@@ -5,14 +5,16 @@ import NavBarRoute from "./NavbarRoute";
 import "../Styles/restaurantPageStyles.css"
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-
-
-const categoriler = ["Hamburger", "Kebab", "İçecek"];
-
+import { userCart } from "../CartData/cart";
 
 
 
-function FoodCardComponent({ price, foodName, sizes }) {
+
+
+
+function FoodCardComponent({ foodid, price, foodName, sizes }) {
+
+    const [size, setSize] = useState("");
 
     return (
 
@@ -45,23 +47,24 @@ function FoodCardComponent({ price, foodName, sizes }) {
 
                                         <div className="radioButtonsBodyStyle rowC">
 
-
-
-                                            <div className="raddioButtonDiv">
-                                                <Label check>
-                                                    <Input type="radio" name="radio1" /> Küçük
-                                                </Label>
-                                            </div>
-                                            <div className="raddioButtonDiv">
-                                                <Label check>
-                                                    <Input type="radio" name="radio1" /> Orta
-                                                </Label>
-                                            </div>
-                                            <div className="raddioButtonDiv">
-                                                <Label check>
-                                                    <Input type="radio" name="radio1" /> Büyük
-                                                </Label>
-                                            </div>
+                                            {
+                                                sizes.map((item) => {
+                                                    return (
+                                                        <div className="raddioButtonDiv">
+                                                            <Label check>
+                                                                <Input
+                                                                    onChange={
+                                                                        (e) => setSize( {id:e.target.id,sizeName:item.name} )
+                                                                        
+                                                                    }
+                                                                    
+                                                                    id={item.id}
+                                                                    type="radio" name={"radio"} /> {item.name}
+                                                            </Label>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
                                         </div>
                                     </FormGroup>
                                 </FormGroup>
@@ -69,7 +72,39 @@ function FoodCardComponent({ price, foodName, sizes }) {
                         </div>
 
                         <div className="rowC">
-                            <Button>Sepete Ekle</Button>
+                            <Button
+
+                                onClick={() => {
+
+                                    if (size !== "") {
+
+                                        console.log("Food id: " + foodid);
+                                        console.log("Food Name: " + foodName);
+                                        console.log("Food price: " + price);
+                                        console.log(size.id);
+                                        console.log(size.sizeName)
+
+                                        userCart.push({
+                                            foodId:foodid,
+                                            foodName:foodName,
+                                            foodPrice:price,
+                                            sizeId:size.id,
+                                            sizeName:size.sizeName
+                                            
+                                        });
+
+                                        console.log(userCart);
+
+                                    }
+                                    else {
+
+                                        console.log("Boyut seçmediniz!!");
+
+                                    }
+
+                                }}
+
+                            >Sepete Ekle</Button>
 
                             <div className="priceDivstyle">
                                 <p>
@@ -87,14 +122,8 @@ function FoodCardComponent({ price, foodName, sizes }) {
                 </div>
             </div>
         </Col>
-
-
-
-
     )
 }
-
-
 
 function RestaurantPage() {
 
@@ -225,7 +254,7 @@ function RestaurantPage() {
                                     foods.map((fooditem) => {
                                         if (categoryitem.name === fooditem.category.name) {
                                             return (
-                                                <FoodCardComponent sizes={fooditem.portion} price={fooditem.price} foodName={fooditem.name}></FoodCardComponent>
+                                                <FoodCardComponent foodid={fooditem.id} sizes={fooditem.portion} price={fooditem.price} foodName={fooditem.name}></FoodCardComponent>
                                             )
                                         }
                                     })

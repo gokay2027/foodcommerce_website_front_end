@@ -4,39 +4,70 @@ import "../Styles/cartStyle.css"
 import backgroundimageurl from "../images/cartBackground.jpg";
 import NavBarRoute from "./NavbarRoute";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useState } from "react";
-
-const foodCartInformation = [
-    { name: "Mc chicken", price: 15, size: "Büyük" },
-    { name: "Mc chicken", price: 15, size: "Büyük" },
-    { name: "Mc chicken", price: 15, size: "Büyük" },
-    { name: "Bay Döner", price: 20, size: "Orta" },
-    { name: "Bay Döner", price: 20, size: "Orta" },
-    { name: "Bay Döner", price: 20, size: "Orta" },
-    { name: "Mc chicken", price: 15, size: "Büyük" },
-    { name: "Mc chicken", price: 15, size: "Büyük" },
-    { name: "Mc chicken", price: 15, size: "Büyük" },
-    { name: "Bay Döner", price: 20, size: "Orta" },
-    { name: "Bay Döner", price: 20, size: "Orta" },
-    { name: "Mc chicken", price: 15, size: "Büyük" },
-    { name: "Mc chicken", price: 15, size: "Büyük" },
-    { name: "Mc chicken", price: 15, size: "Büyük" },
-    { name: "Bay Döner", price: 20, size: "Orta" },
-    { name: "Bay Döner", price: 20, size: "Orta" },
+import { useEffect, useState } from "react";
+import { userCart } from "../CartData/cart";
+import axios from "axios";
 
 
-];
-
-
-const sum = foodCartInformation.reduce((accumulator, object) => {
-    return accumulator + object.price;
-}, 0);
 
 function CartPage() {
+
+
+    let userid = sessionStorage.getItem("userId");
 
     const [selectedPaymentType, setSelectedPaymentType] = useState("");
     const [selectedAddress, setSelectedAddress] = useState("");
     const [selectedCard, setSelectedCard] = useState("");
+
+
+    const [cards, setCards] = useState([]);
+    const [addresses, setAddreses] = useState([]);
+    const [paymenttypes, setPaymentTypes] = useState([]);
+
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/user/getcards", {
+            params: {
+
+                id: userid
+
+            }
+        }).then((data) => {
+            console.log(data.data.data);
+            setCards(data.data.data);
+        })
+    }, []);
+
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/user/getuseradresses", {
+            params: {
+                id: userid,
+            }
+        }).then((data) => {
+            setAddreses(data.data.data);
+            console.log(data.data.data);
+        })
+    }, []);
+
+
+    useEffect(() => {
+
+        axios.get("http://localhost:8080/paymentType/getAll").then((data) => {
+            setPaymentTypes(data.data.data);
+            console.log(data.data.data);
+        })
+
+
+    }, [])
+
+
+
+
+
+
+
+
 
     return (
         <div style={{
@@ -85,22 +116,13 @@ function CartPage() {
                                             name="adresses"
                                             className="comboboxStyle">
                                             <option value=""></option>
-                                            <option value="psum dolor sit amet, co
-                                                    nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                    idunt utillum dol">psum dolor sit amet, co
-                                                nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                idunt utillum dol</option>
-                                            <option value="psum dolor sit amet, co
-                                                    nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                    idunt utillum dol">psum dolor sit amet, co
-                                                nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                idunt utillum dol</option>
-                                            <option value="psum dolor sit amet, co
-                                                    nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                    idunt utillum dol">
-                                                psum dolor sit amet, co
-                                                nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                idunt utillum dol</option>
+                                            {
+                                                addresses.map((item) => {
+                                                    return (
+                                                        <option value={item.id}>{item.streetNo} - {item.buildingNumber} - {item.hoodName} - {item.city} - {item.district} </option>
+                                                    )
+                                                })
+                                            }
                                         </select>
                                     </form>
                                 </div>
@@ -121,10 +143,13 @@ function CartPage() {
 
                                             name="paymenttypes" className="comboboxStyle">
                                             <option value=""></option>
-                                            <option value="kredi">Kredi</option>
-                                            <option value="nakit">Nakit</option>
-                                            <option value="havale">Havale</option>
-                                            <option value="kapıda">Kapıda</option>
+                                            {
+                                                paymenttypes.map((item) => {
+                                                    return (
+                                                        <option value={item.id}>{item.name}</option>
+                                                    )
+                                                })
+                                            }
                                         </select>
                                     </form>
                                 </div>
@@ -145,22 +170,14 @@ function CartPage() {
                                         name="cards"
                                         className="comboboxStyle">
                                         <option value=""></option>
-                                        <option value="psum dolor sit amet, co
-                                                    nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                    idunt utillum dol">psum dolor sit amet, co
-                                            nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                            idunt utillum dol</option>
-                                        <option value="psum dolor sit amet, co
-                                                    nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                    idunt utillum dol">psum dolor sit amet, co
-                                            nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                            idunt utillum dol</option>
-                                        <option value="psum dolor sit amet, co
-                                                    nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                                    idunt utillum dol">
-                                            psum dolor sit amet, co
-                                            nsectetur adipiscing elit, sed do eiusmod tempor incid,
-                                            idunt utillum dol</option>
+
+                                        {
+                                            cards.map((item) => {
+                                                return (
+                                                    <option value={item.id}>{item.cardName} - {item.cardNumber} - {item.ccv} - {item.endDate}</option>
+                                                )
+                                            })
+                                        }
                                     </select>
                                 </form>
                             </div>
@@ -173,7 +190,7 @@ function CartPage() {
 
                             <div className="priceDivBodyStyle">
                                 <h3>
-                                    Toplam: {sum} ₺
+                                    Toplam: 300₺
                                 </h3>
 
                             </div>
@@ -211,7 +228,7 @@ function CartPage() {
                                         </thead>
                                         <tbody>
                                             {
-                                                foodCartInformation.map((item, index) => {
+                                                userCart.map((item, index) => {
                                                     return (
                                                         <tr>
                                                             <th scope="row">
@@ -219,17 +236,17 @@ function CartPage() {
                                                             </th>
                                                             <td>
                                                                 {
-                                                                    item.name
+                                                                    item.foodName
                                                                 }
                                                             </td>
                                                             <td>
                                                                 {
-                                                                    item.size
+                                                                    item.sizeName
                                                                 }
                                                             </td>
                                                             <td>
                                                                 {
-                                                                    item.price
+                                                                    item.foodPrice
                                                                 }
 
                                                             </td>
