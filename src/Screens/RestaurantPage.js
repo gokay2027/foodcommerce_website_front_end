@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { Card, CardImg, CardImgOverlay, CardTitle, CardText, Row, Col, Form, FormGroup, Input, Label, Button } from "reactstrap";
 import NavBarRoute from "./NavbarRoute";
 import "../Styles/restaurantPageStyles.css"
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 
 const categoriler = ["Hamburger", "Kebab", "İçecek"];
@@ -10,25 +12,7 @@ const categoriler = ["Hamburger", "Kebab", "İçecek"];
 const foods = [1, 2, 3, 4, 5, 6];
 
 
-const comments = [1, 2, 3, 4, 5, 6, 7, 8]
-
-
-
-
-
-function FoodCardComponent() {
-
-    // state değişkeni oluşturun ve ilk değerini 0 olarak ayarlayın
-    const [count, setCount] = useState(0);
-
-    // arttırma işlemini gerçekleştiren fonksiyon
-    const increment = () => setCount(count + 1);
-
-    // azaltma işlemini gerçekleştiren fonksiyon
-    const decrement = () => setCount(count - 1);
-
-
-
+function FoodCardComponent({ price, foodName, sizes }) {
 
     return (
 
@@ -83,29 +67,7 @@ function FoodCardComponent() {
                         </div>
 
                         <div className="rowC">
-                            {/* azaltma butonu */}
-                            <Button className="decrementButtonStyle" onClick={
-                                () => {
-                                    if (count > 0) {
-                                        decrement();
-                                    }
-                                }
-
-                            }>-</Button>
-                            {/* sayacı göster */}
-                            <p className="foodCountStyle">
-                                <h4>
-                                    {count}
-                                </h4>
-
-                            </p>
-                            {/* arttırma butonu */}
-                            <Button className="incrementButtonStyle" onClick={
-                                () => {
-                                    increment();
-                                }
-                            }>+
-                            </Button>
+                            <Button>Sepete Ekle</Button>
 
                             <div className="priceDivstyle">
                                 <p>
@@ -134,6 +96,32 @@ function FoodCardComponent() {
 
 function RestaurantPage() {
 
+
+    let userid = sessionStorage.getItem("userId");
+
+    const [contentValue, setContentValue] = useState("");
+
+    const [rateSelect, setRateSelect] = useState("1");
+
+    const { state } = useLocation();
+    const { id, cateogryName } = state;
+    console.log(state.id + " Restoran idsi");
+
+    //evaluations
+    const [evalutaions, setEvaluations] = useState([]);
+
+    useEffect(() => {
+            axios.get("http://localhost:8080/restaurant/restaurantevaluation", {
+                params: {
+                    id: state.id
+                }
+            }).then((data) => {
+                console.log(data.data.data);
+                setEvaluations(data.data.data);
+            })
+       
+        
+    }, [])
 
 
     return (
@@ -209,25 +197,16 @@ function RestaurantPage() {
 
             </div>
             {
-                comments.map((item) => {
+                evalutaions.map((item) => {
                     return (
                         <div className="commentCard button1">
-
-
-                            <div >
+                            <div>
                                 <h5>
-                                    Lorem ipsum <FaStar size={15} color={"orange"} className="iconStyle"></FaStar> (3)
+                                    {item.user.name} {item.user.surname} <FaStar size={15} color={"orange"} className="iconStyle"></FaStar> {item.rateValue}
                                 </h5>
-
-
                             </div>
                             <p>
-                                orem ipsum dolor sit amet, consectetur adipiscing elit,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqu
-                                a. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehender
-                                it in voluptate velit esse cillum dolore eu fugiat nulla p
-                                ariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit an
+                                {item.content}
                             </p>
                         </div>
                     )
@@ -242,9 +221,20 @@ function RestaurantPage() {
                     </h4>
 
                 </p>
-                <input className="textInputStyle" type="text" id="fname" name="firstname" placeholder="Your name.." />
+                <input
 
-                <select className="selectInputStyle" id="country">
+                    value={contentValue}
+                    onInput={e => setContentValue(e.target.value)}
+                    className="textInputStyle"
+                    type="text"
+                    id="content"
+                    name="content" placeholder="Enter your comment" />
+
+                <select
+                    value={rateSelect}
+                    onChange={e => setRateSelect(e.target.value)}
+
+                    className="selectInputStyle" id="rate">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -253,7 +243,29 @@ function RestaurantPage() {
                 </select>
             </div>
             <div className="rowC">
-                <Button className="evaluationButtonStyle" color="primary">Yorumla</Button>
+                <Button
+
+                    onClick={() => {
+
+                        console.log(contentValue);
+                        console.log(rateSelect + " Puan");
+                        axios.post("http://localhost:8080/restaurant/addEvaluation", null, {
+
+                            params: {
+
+                                content: contentValue,
+                                rateValue: parseInt(rateSelect),
+                                restaurantId: state.id,
+                                userId: userid
+                            }
+                        })
+
+
+
+                    }}
+
+
+                    className="evaluationButtonStyle" color="primary">Yorumla</Button>
             </div>
         </div>
     )

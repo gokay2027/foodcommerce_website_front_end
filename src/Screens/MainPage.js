@@ -94,7 +94,7 @@ function MainPage() {
                                         <Card
 
                                             onClick={() => {
-                                                navigate("/restaurantpage");
+                                                navigate("/restaurantpage",{ state: { id: item["id"]} });
                                             }}
 
                                             className="my-2 restorantCardStyle button2">

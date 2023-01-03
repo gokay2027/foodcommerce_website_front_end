@@ -6,6 +6,7 @@ import 'react-popup-alert/dist/index.css'
 import "../Styles/profilePageStyle.css"
 import NavBarRoute from './NavbarRoute';
 import axios from 'axios';
+import { AxiosProvider } from 'react-axios';
 
 
 
@@ -15,8 +16,16 @@ function ProfilePage() {
 
 
     const [currentUser, setCurrentUser] = useState(null);
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
 
+    //Basic information state area
+    const [nameValue, setNameValue] = useState("");
+    const [surnameValue, setSurnameValue] = useState("");
 
+    //New password - Old password
+    const [newPasswordValue, setNewPasswordValue] = useState("");
+    const [oldPasswordValue, setOldPasswordValue] = useState("");
 
     //Card input state area
     const [cardNameValue, setCardNameValue] = useState('');
@@ -38,12 +47,9 @@ function ProfilePage() {
 
 
 
-
-
-
-
-
-
+    //input default value
+    const [inputDefaultName, setInputDefaultName] = useState("");
+    const [inputDefaultSurName, setInputDefaultSurname] = useState("");
 
     const foodCartInformation = [
         { name: "Mc chicken", price: 15, size: "Büyük" },
@@ -68,18 +74,24 @@ function ProfilePage() {
 
     let userid = parseInt(sessionStorage.getItem("userId"))
 
-    
+
 
     useEffect(() => {
-        axios.get("http://localhost:8080/user/getuserbyid", {
-            params: {
-                id: userid,
-            }
-        })
-            .then((data) => {
-                setCurrentUser(data.data.data);
+        if (currentUser === null) {
+            axios.get("http://localhost:8080/user/getuserbyid", {
+                params: {
+                    id: userid,
+                }
             })
-    }, [])
+                .then((data) => {
+                    setCurrentUser(data.data.data);
+                    setInputDefaultName(data.data.data.name);
+                    setInputDefaultSurname(data.data.data.surname);
+                    setName(data.data.data.name);
+                    setSurname(data.data.data.surname);
+                })
+        }
+    }, []);
 
 
     // useEffect(() => {
@@ -94,47 +106,55 @@ function ProfilePage() {
 
 
     // useEffect(() => {
-    //     axios.get("http://localhost:8080/user/getuseradresses", {
-    //         params: {
-    //             id: userid,
-    //         }
-    //     })
-    //         .then((data) => {
-    //             setAdresses(data.data.data);
+
+    //     if (addresses.length !== 0) {
+    //         axios.get("http://localhost:8080/user/getuseradresses", {
+    //             params: {
+    //                 id: userid,
+    //             }
     //         })
+    //             .then((data) => {
+    //                 setAdresses(data.data.data);
+    //             })
+    //     }
 
-    // },
-    //     [])
-
-
-    useEffect(() => {
-        if (cards.length === 0) {
-            axios.get("http://localhost:8080/user/getcards", {
-                params: {
-                    id: userid,
-                }
-            }).then((data) => {
-                setCards(data.data.data);
-
-            });
-            console.log("deneme")
-        }
-    }, [cards])
+    // }, [])
 
 
-    useEffect(() => {
 
-        if (addresses.length === 0) {
-            axios.get("http://localhost:8080/user/getuseradresses", {
-                params: {
-                    id: userid,
-                }
-            })
-                .then((data) => {
-                    setAdresses(data.data.data);
-                })
-        }
-    }, [addresses])
+
+
+     useEffect(() => {
+
+         if (cards.length === 0) {
+             axios.get("http://localhost:8080/user/getcards", {
+                 params: {
+                     id: userid,
+                 }
+             }).then((data) => {
+                 setCards(data.data.data);
+
+                 console.log("deneme")
+
+             });
+         }
+
+     }, [cards])
+
+
+     useEffect(() => {
+
+         if (addresses.length === 0) {
+             axios.get("http://localhost:8080/user/getuseradresses", {
+                 params: {
+                     id: userid,
+                 }
+             })
+                 .then((data) => {
+                     setAdresses(data.data.data);
+                 })
+         }
+     }, [addresses])
 
 
 
@@ -143,23 +163,26 @@ function ProfilePage() {
         <div
             className='backgroundImageStyleDiv'
         >
-
             <NavBarRoute></NavBarRoute>
 
             <div className='basicInformationDivStyle button1'>
 
 
                 <Row>
+                    <p>
+                        <h5>
+                            Merhaba: {name} {surname}
+                        </h5>
+                    </p>
                     <Col>
                         <FormGroup>
                             <Label style={{ fontWeight: "bold", fontSize: 20 }}
-
                                 for="nameinput">
-
-                                İsim:
+                                İsim Değiştir:
                             </Label>
                             <Input
-                                defaultValue={"Gökay"}
+                                value={nameValue}
+                                onInput={e => setNameValue(e.target.value)}
                                 id="nameinput"
                                 name="name"
                                 placeholder="Name"
@@ -169,10 +192,12 @@ function ProfilePage() {
                     <Col>
                         <FormGroup>
                             <Label style={{ fontWeight: "bold", fontSize: 20 }} for="surnameinput">
-                                Soyisim:
+                                Soyisim Değiştir:
                             </Label>
                             <Input
-                                defaultValue={"Dinç"}
+                                value={surnameValue}
+                                onInput={e => setSurnameValue(e.target.value)}
+
                                 id="surnameinput"
                                 name="name"
                                 placeholder="Name"
@@ -186,35 +211,107 @@ function ProfilePage() {
                         <FormGroup>
                             <Label style={{ fontWeight: "bold", fontSize: 20 }}
 
-                                for="passwordinput">
+                                for="oldpasswordinput">
 
-                                New password:
+                                Old Password:
                             </Label>
                             <Input
-                                defaultValue={"Gökay"}
-                                id="passwordinput"
-                                name="name"
-                                placeholder="Name"
+                                value={oldPasswordValue}
+                                onInput={e => setOldPasswordValue(e.target.value)}
+                                id="oldpasswordinput"
+                                name="oldpasswordinput"
+                                placeholder="Old Password"
                                 type='password'
                             />
                         </FormGroup>
                     </Col>
                     <Col>
                         <FormGroup>
-                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="passwordagaininput">
-                                New Password Again:
+                            <Label style={{ fontWeight: "bold", fontSize: 20 }} for="newpasswordinput">
+                                New Password:
                             </Label>
                             <Input
-                                defaultValue={"Dinç"}
-                                id="passwordagaininput"
-                                name="name"
-                                placeholder="Name"
+                                value={newPasswordValue}
+                                onInput={e => setNewPasswordValue(e.target.value)}
+                                id="newpasswordinput"
+                                name="newpassword"
+                                placeholder="New Password"
                                 type='password'
                             />
                         </FormGroup>
                     </Col>
                 </Row>
-                <Button className='changeInformationButtonStyle'> Bilgileri değiştir </Button>
+                <Row>
+                    <Col>
+
+                        <Button
+
+                            onClick={() => {
+
+                                if (nameValue.trim() !== "" && surnameValue.trim() !== "") {
+
+                                    axios.put("http://localhost:8080/user/nameChange", null, {
+                                        params: {
+                                            newName: nameValue,
+                                            userId: userid
+                                        }
+                                    }).then(() => {
+
+                                        axios.put("http://localhost:8080/user/surnameChange", null, {
+                                            params: {
+                                                newSurname: surnameValue,
+                                                userId: userid
+                                            }
+                                        }).then(() => {
+                                            console.log("Surname changed");
+                                            setCurrentUser(null);
+                                        });
+
+                                    });
+
+
+
+                                }
+                                else {
+                                    console.log("Bilgiler değiştirilemedi")
+                                }
+                            }}
+                            color='primary' className='changeInformationButtonStyle'> Bilgileri değiştir </Button>
+
+
+
+                    </Col>
+
+                    <Col>
+                        <Button onClick={() => {
+
+                            console.log("parola değiştir");
+                            console.log(oldPasswordValue + " Old password");
+                            console.log(newPasswordValue + " New Password");
+
+                            if (newPasswordValue.trim() !== "" && oldPasswordValue.trim() !== "") {
+                                axios.put("http://localhost:8080/user/passwordChange", null, {
+                                    params: {
+
+                                        newPassword: newPasswordValue,
+                                        oldPassword: oldPasswordValue,
+                                        userId: userid,
+                                    }
+                                }).then(() => {
+                                    console.log("Şifre değiştirildi");
+                                    setCurrentUser(null);
+                                });
+                            }
+
+
+
+
+                        }} color='primary' className='changeInformationButtonStyle'> Parola değiştir </Button>
+                    </Col>
+
+
+                </Row>
+
 
 
             </div>
@@ -395,7 +492,7 @@ function ProfilePage() {
                                                                             userId: userid
                                                                         }
                                                                     }).then(
-                                                                        ()=>{
+                                                                        () => {
                                                                             setCards([]);
                                                                         }
                                                                     )
@@ -625,22 +722,22 @@ function ProfilePage() {
                                                         <td className="alignTdItem">
 
                                                             <Button
-                                                            
-                                                            onClick={()=>{
-                                                                
 
-                                                                axios.delete("http://localhost:8080/user/deleteAddress",{
-                                                                    params:{
-                                                                        addressId:item.id,
-                                                                        userId:userid
-                                                                    }
-                                                                }).then(()=>{
-                                                                    console.log(item.id+" idli adres silindi");
-                                                                    setAdresses([]);
-                                                                })
-                                                            }}
-                                                            
-                                                            color="danger">
+                                                                onClick={() => {
+
+
+                                                                    axios.delete("http://localhost:8080/user/deleteAddress", {
+                                                                        params: {
+                                                                            addressId: item.id,
+                                                                            userId: userid
+                                                                        }
+                                                                    }).then(() => {
+                                                                        console.log(item.id + " idli adres silindi");
+                                                                        setAdresses([]);
+                                                                    })
+                                                                }}
+
+                                                                color="danger">
                                                                 <RiDeleteBin6Fill></RiDeleteBin6Fill>
                                                             </Button>
 
