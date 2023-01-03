@@ -68,6 +68,8 @@ function ProfilePage() {
 
     let userid = parseInt(sessionStorage.getItem("userId"))
 
+    
+
     useEffect(() => {
         axios.get("http://localhost:8080/user/getuserbyid", {
             params: {
@@ -80,30 +82,59 @@ function ProfilePage() {
     }, [])
 
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/user/getcards", {
-            params: {
-                id: userid,
-            }
-        }).then((data) => {
-            setCards(data.data.data);
-        });
-    }, [])
+    // useEffect(() => {
+    //     axios.get("http://localhost:8080/user/getcards", {
+    //         params: {
+    //             id: userid,
+    //         }
+    //     }).then((data) => {
+    //         setCards(data.data.data);
+    //     });
+    // }, [])
+
+
+    // useEffect(() => {
+    //     axios.get("http://localhost:8080/user/getuseradresses", {
+    //         params: {
+    //             id: userid,
+    //         }
+    //     })
+    //         .then((data) => {
+    //             setAdresses(data.data.data);
+    //         })
+
+    // },
+    //     [])
 
 
     useEffect(() => {
-        axios.get("http://localhost:8080/user/getuseradresses", {
-            params: {
-                id: userid,
-            }
-        })
-            .then((data) => {
-                setAdresses(data.data.data);
+        if (cards.length === 0) {
+            axios.get("http://localhost:8080/user/getcards", {
+                params: {
+                    id: userid,
+                }
+            }).then((data) => {
+                setCards(data.data.data);
+
+            });
+            console.log("deneme")
+        }
+    }, [cards])
+
+
+    useEffect(() => {
+
+        if (addresses.length === 0) {
+            axios.get("http://localhost:8080/user/getuseradresses", {
+                params: {
+                    id: userid,
+                }
             })
-    }, 
-    [])
-
-
+                .then((data) => {
+                    setAdresses(data.data.data);
+                })
+        }
+    }, [addresses])
 
 
 
@@ -286,7 +317,7 @@ function ProfilePage() {
                                 })
                                     .then(() => {
                                         console.log("Kart eklendi!!");
-                                        //window.location.reload(false);
+                                        setCards([]);
                                     })
 
                             }
@@ -353,7 +384,28 @@ function ProfilePage() {
                                                         </td>
                                                         <td className="alignTdItem">
 
-                                                            <Button color="danger">
+                                                            <Button
+
+                                                                onClick={() => {
+                                                                    console.log(item.id + " Verisi silindi");
+
+                                                                    axios.delete("http://localhost:8080/user/deleteCard", {
+                                                                        params: {
+                                                                            cardId: item.id,
+                                                                            userId: userid
+                                                                        }
+                                                                    }).then(
+                                                                        ()=>{
+                                                                            setCards([]);
+                                                                        }
+                                                                    )
+
+
+
+                                                                }}
+
+
+                                                                color="danger">
                                                                 <RiDeleteBin6Fill></RiDeleteBin6Fill>
                                                             </Button>
 
@@ -492,9 +544,10 @@ function ProfilePage() {
 
                                 }).then(() => {
 
-                                    console.log("Başarı ile eklendi paşam");
-
+                                    console.log("Başarı ile eklendi");
+                                    setAdresses([]);
                                 })
+
 
 
 
@@ -516,13 +569,20 @@ function ProfilePage() {
                                                 #
                                             </th>
                                             <th>
-                                                Food Name
+
+                                                City
                                             </th>
                                             <th>
-                                                Size
+                                                Hood Name
                                             </th>
                                             <th>
-                                                Price
+                                                District
+                                            </th>
+                                            <th>
+                                                Street No
+                                            </th>
+                                            <th>
+                                                Building Number
                                             </th>
                                         </tr>
                                     </thead>
@@ -536,23 +596,51 @@ function ProfilePage() {
                                                         </th>
                                                         <td>
                                                             {
-                                                                item.name
+                                                                item.city
                                                             }
                                                         </td>
                                                         <td>
                                                             {
-                                                                item.size
+                                                                item.hoodName
                                                             }
                                                         </td>
                                                         <td>
                                                             {
-                                                                item.price
+                                                                item.district
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            {
+                                                                item.streetNo
                                                             }
 
                                                         </td>
+                                                        <td>
+                                                            {
+                                                                item.buildingNumber
+                                                            }
+
+                                                        </td>
+
                                                         <td className="alignTdItem">
 
-                                                            <Button color="danger">
+                                                            <Button
+                                                            
+                                                            onClick={()=>{
+                                                                
+
+                                                                axios.delete("http://localhost:8080/user/deleteAddress",{
+                                                                    params:{
+                                                                        addressId:item.id,
+                                                                        userId:userid
+                                                                    }
+                                                                }).then(()=>{
+                                                                    console.log(item.id+" idli adres silindi");
+                                                                    setAdresses([]);
+                                                                })
+                                                            }}
+                                                            
+                                                            color="danger">
                                                                 <RiDeleteBin6Fill></RiDeleteBin6Fill>
                                                             </Button>
 
