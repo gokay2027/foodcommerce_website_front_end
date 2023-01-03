@@ -184,8 +184,35 @@ function CartPage() {
 
 
                             <Button onClick={() => {
-                                console.log(selectedAddress);
-                                console.log(selectedPaymentType);
+
+                                if (selectedAddress !== "" && selectedPaymentType !== "" && selectedCard !== "") {
+
+                                    console.log("Adress id: " + selectedAddress);
+                                    console.log("Payment Type Id: " + selectedPaymentType);
+                                    console.log("Selected Card id: " + selectedCard);
+
+                                    for(let i =0;i<userCart.length;i++){
+                                        
+
+                                        axios.post("http://localhost:8080/order/neworder",null,{
+                                            params:{
+
+                                                foodId:userCart[i].foodId,
+                                                paymentId:selectedPaymentType,
+                                                userAdressId:selectedAddress,
+                                                userId:userid
+                                            }
+                                        }).then(()=>{
+                                            console.log("Veriler Eklendi");
+                                        })
+
+                                    }
+                                }
+                                else{
+                                    console.log("Hatalı");
+                                }
+
+
                             }} className="buttonLayout btn-custom btn-primary" color="primary">Sipariş Ver</Button>
 
                             <div className="priceDivBodyStyle">

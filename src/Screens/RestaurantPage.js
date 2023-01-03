@@ -12,7 +12,7 @@ import { userCart } from "../CartData/cart";
 
 
 
-function FoodCardComponent({ foodid, price, foodName, sizes }) {
+function FoodCardComponent({ foodid, price, foodName, sizes,restaurantId }) {
 
     const [size, setSize] = useState("");
 
@@ -83,14 +83,15 @@ function FoodCardComponent({ foodid, price, foodName, sizes }) {
                                         console.log("Food price: " + price);
                                         console.log(size.id);
                                         console.log(size.sizeName)
+                                        console.log(restaurantId);
 
                                         userCart.push({
                                             foodId:foodid,
                                             foodName:foodName,
                                             foodPrice:price,
                                             sizeId:size.id,
-                                            sizeName:size.sizeName
-                                            
+                                            sizeName:size.sizeName,
+                                            restaurantId:restaurantId
                                         });
 
                                         console.log(userCart);
@@ -254,7 +255,9 @@ function RestaurantPage() {
                                     foods.map((fooditem) => {
                                         if (categoryitem.name === fooditem.category.name) {
                                             return (
-                                                <FoodCardComponent foodid={fooditem.id} sizes={fooditem.portion} price={fooditem.price} foodName={fooditem.name}></FoodCardComponent>
+                                                <FoodCardComponent
+                                                restaurantId={state.id}
+                                                foodid={fooditem.id} sizes={fooditem.portion} price={fooditem.price} foodName={fooditem.name}></FoodCardComponent>
                                             )
                                         }
                                     })
