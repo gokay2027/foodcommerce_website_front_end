@@ -9,7 +9,7 @@ import axios from "axios";
 
 const categoriler = ["Hamburger", "Kebab", "İçecek"];
 
-const foods = [1, 2, 3, 4, 5, 6];
+
 
 
 function FoodCardComponent({ price, foodName, sizes }) {
@@ -35,7 +35,7 @@ function FoodCardComponent({ price, foodName, sizes }) {
                     <div className="secondBodyStyle">
                         <p className="foodNameStyle">
                             <h5>
-                                Ohannes Burger
+                                {foodName}
                             </h5>
                         </p>
                         <div className="rowC">
@@ -44,6 +44,8 @@ function FoodCardComponent({ price, foodName, sizes }) {
                                     <FormGroup check >
 
                                         <div className="radioButtonsBodyStyle rowC">
+
+
 
                                             <div className="raddioButtonDiv">
                                                 <Label check>
@@ -73,7 +75,7 @@ function FoodCardComponent({ price, foodName, sizes }) {
                                 <p>
                                     <h4>
                                         {/* Burada useState kullanılarak değer değişecek */}
-                                        15 ₺
+                                        {price}
                                     </h4>
 
                                 </p>
@@ -96,12 +98,17 @@ function FoodCardComponent({ price, foodName, sizes }) {
 
 function RestaurantPage() {
 
-
     let userid = sessionStorage.getItem("userId");
 
     const [contentValue, setContentValue] = useState("");
 
     const [rateSelect, setRateSelect] = useState("1");
+
+    const [categories, setCategories] = useState([]);
+
+    const [restaurant, setRestaurant] = useState({});
+
+    const [foods, setFoods] = useState([]);
 
     const { state } = useLocation();
     const { id, cateogryName } = state;
@@ -111,18 +118,59 @@ function RestaurantPage() {
     const [evalutaions, setEvaluations] = useState([]);
 
     useEffect(() => {
-            axios.get("http://localhost:8080/restaurant/restaurantevaluation", {
+
+        axios.get("http://localhost:8080/restaurant/restaurantevaluation", {
+            params: {
+                id: state.id
+            }
+        }).then((data) => {
+            console.log(data.data.data);
+            setEvaluations(data.data.data);
+        })
+
+
+    }, [])
+
+    useEffect(() => {
+
+        axios.get("http://localhost:8080//restaurant/getAllCategories", {
+            params: {
+                restaurantId: state.id
+            }
+        }).then((data) => {
+            console.log(data.data.data);
+            setCategories(data.data.data);
+        })
+    }, [])
+
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/restaurant/restaurantmenu", {
+            params: {
+                id: state.id
+            }
+        }).then((data) => {
+            console.log(data.data.data);
+            setFoods(data.data.data);
+        })
+    }, [])
+
+
+    useEffect(() => {
+
+        axios.get("http://localhost:8080/restaurant/restaurantById",
+            {
                 params: {
-                    id: state.id
+                    id: state.id,
                 }
             }).then((data) => {
                 console.log(data.data.data);
-                setEvaluations(data.data.data);
-            })
-       
-        
-    }, [])
+                setRestaurant(data.data.data);
 
+            })
+
+
+    }, [])
 
     return (
         <div>
@@ -146,7 +194,9 @@ function RestaurantPage() {
 
                     <p className="restorantNameStyle">
                         <h2>
-                            Mc Donalds
+                            {
+                                restaurant.name
+                            }
                         </h2>
                     </p>
 
@@ -161,22 +211,23 @@ function RestaurantPage() {
 
             </Row>
 
-
             {
-                categoriler.map((item) => {
+                categories.map((categoryitem) => {
                     return (
                         <div className="bodyCard">
                             <p className="categoryNameStyle">
                                 <h3>
-                                    {item}
+                                    {categoryitem.name}
                                 </h3>
                             </p>
                             <Row>
                                 {
-                                    foods.map((item) => {
-                                        return (
-                                            <FoodCardComponent></FoodCardComponent>
-                                        )
+                                    foods.map((fooditem) => {
+                                        if (categoryitem.name === fooditem.category.name) {
+                                            return (
+                                                <FoodCardComponent sizes={fooditem.portion} price={fooditem.price} foodName={fooditem.name}></FoodCardComponent>
+                                            )
+                                        }
                                     })
                                 }
                             </Row>
@@ -185,9 +236,7 @@ function RestaurantPage() {
                 })
             }
 
-            <Button className="addCartButton">
-                Sepete Ekle
-            </Button>
+
 
             <div className="evaluationTopic">
 
