@@ -31,19 +31,19 @@ import 'react-popup-alert/dist/index.css'
 
 const items = [
   {
-    src: 'https://picsum.photos/id/123/1200/400',
+    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/NCI_Visuals_Food_Hamburger.jpg/800px-NCI_Visuals_Food_Hamburger.jpg',
     altText: 'En sevdiğiniz yemekler',
     caption: 'orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim ver',
     key: 1,
   },
   {
-    src: 'https://picsum.photos/id/456/1200/400',
+    src: 'https://play-lh.googleusercontent.com/0loj-whL4XSeF4v5W3d213b1pH0RRTQUlmK1VESE-Rsydp06rVyPTq_Hwpwm1avB8URL',
     altText: 'En iyi restoranlar',
     caption: 'orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim ve',
     key: 2,
   },
   {
-    src: 'https://picsum.photos/id/678/1200/400',
+    src: 'https://i.lezzet.com.tr/images-xxlarge-recipe/cikolata-soslu-waffle-46e20db3-cb05-4cb3-aded-7636e03437f9.jpg',
     altText: '5 Yıldızlı müşteri kalitesi',
     caption: 'orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim ve',
     key: 3,
@@ -135,7 +135,7 @@ function HomePage(args) {
         onExited={() => setAnimating(false)}
         key={item.src}
       >
-        <img src={item.src} alt={item.altText} className="carouselImage" />
+        <img src={item.src} height={600} alt={item.altText} className="carouselImage" />
         <CarouselCaption
           captionText={item.caption}
           captionHeader={item.altText}
@@ -282,7 +282,7 @@ function HomePage(args) {
                       <Card className="my-2 cardStyle">
                         <CardImg
                           alt="Card image cap"
-                          src="https://picsum.photos/900/180"
+                          src="https://kofteciyusuf.com/uploads/galleries/1_21.07.2021_02_36_23.jpg"
                           style={{
                             height: 380,
                             borderRadius: 0

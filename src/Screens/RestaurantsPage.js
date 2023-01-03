@@ -82,7 +82,7 @@ function RestaurantsPage() {
                                             className="my-2 restorantCardStyle button2">
                                             <CardImg
                                                 alt="Card image cap"
-                                                src="https://picsum.photos/900/180"
+                                                src="https://www.yapikatalogu.com/Files/Project/buyukev-1.jpg"
                                                 style={{
                                                     height: 380,
                                                     borderRadius: 0

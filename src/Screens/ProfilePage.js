@@ -57,6 +57,10 @@ function ProfilePage() {
     const [inputDefaultName, setInputDefaultName] = useState("");
     const [inputDefaultSurName, setInputDefaultSurname] = useState("");
 
+
+    //All orders history State
+    const [orders,setOrdersHistory] = useState([]);
+
     const foodCartInformation = [
         { name: "Mc chicken", price: 15, size: "Büyük" },
         { name: "Mc chicken", price: 15, size: "Büyük" },
@@ -164,7 +168,16 @@ function ProfilePage() {
     }, [addressTrigger])
 
 
-
+    useEffect(()=>{
+        axios.get("http://localhost:8080/order/allorders",{
+            params:{
+                userId:userid,
+            }
+        }).then((data)=>{
+            console.log(data.data.data);
+            setOrdersHistory(data.data.data);
+        })
+    },[])
 
     return (
         <div
@@ -782,9 +795,7 @@ function ProfilePage() {
                                 <th>
                                     Food Name
                                 </th>
-                                <th>
-                                    Size
-                                </th>
+                                
                                 <th>
                                     Price
                                 </th>
@@ -795,7 +806,7 @@ function ProfilePage() {
                         </thead>
                         <tbody>
                             {
-                                foodCartInformation.map((item, index) => {
+                                orders.map((item, index) => {
                                     return (
                                         <tr>
                                             <th scope="row">
@@ -803,23 +814,35 @@ function ProfilePage() {
                                             </th>
                                             <td>
                                                 {
-                                                    item.name
+                                                    item.food.name
                                                 }
                                             </td>
+                                            
                                             <td>
                                                 {
-                                                    item.size
-                                                }
-                                            </td>
-                                            <td>
-                                                {
-                                                    item.price
+                                                    item.food.price
                                                 }
 
                                             </td>
                                             <td>
                                                 {
-                                                    item.price
+                                                    item.userAddress.streetNo 
+                                                }
+                                                 -
+                                                {
+                                                    item.userAddress.hoodName
+                                                }
+                                                -
+                                                {
+                                                    item.userAddress.city
+                                                }
+                                                -
+                                                {
+                                                    item.userAddress.district
+                                                }
+                                                -
+                                                {
+                                                    item.userAddress.buildingNumber
                                                 }
 
                                             </td>

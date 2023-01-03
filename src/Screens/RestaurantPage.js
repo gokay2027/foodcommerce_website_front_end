@@ -25,7 +25,7 @@ function FoodCardComponent({ foodid, price, foodName, sizes,restaurantId }) {
                         <Card inverse className="button1">
                             <CardImg
                                 alt="Card image cap"
-                                src="https://picsum.photos/900/270?grayscale"
+                                src="https://www.yapikatalogu.com/Files/Project/buyukev-1.jpg"
                                 height={140}
                                 width="100%"
                             />
