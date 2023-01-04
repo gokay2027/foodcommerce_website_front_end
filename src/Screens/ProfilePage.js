@@ -15,9 +15,8 @@ import { useNavigate } from 'react-router-dom';
 
 function ProfilePage() {
 
-
     const navigate = useNavigate();
-    
+
     const [currentUser, setCurrentUser] = useState(null);
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
