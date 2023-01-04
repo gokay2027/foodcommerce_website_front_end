@@ -8,11 +8,7 @@ import axios from "axios";
 import { userCart } from "../CartData/cart";
 
 
-
-
-
-
-function FoodCardComponent({ foodid, price, foodName, sizes,restaurantId }) {
+function FoodCardComponent({ foodid, price, foodName, sizes, restaurantId }) {
 
     const [size, setSize] = useState("");
 
@@ -54,10 +50,10 @@ function FoodCardComponent({ foodid, price, foodName, sizes,restaurantId }) {
                                                             <Label check>
                                                                 <Input
                                                                     onChange={
-                                                                        (e) => setSize( {id:e.target.id,sizeName:item.name} )
-                                                                        
+                                                                        (e) => setSize({ id: e.target.id, sizeName: item.name })
+
                                                                     }
-                                                                    
+
                                                                     id={item.id}
                                                                     type="radio" name={"radio"} /> {item.name}
                                                             </Label>
@@ -86,12 +82,12 @@ function FoodCardComponent({ foodid, price, foodName, sizes,restaurantId }) {
                                         console.log(restaurantId);
 
                                         userCart.push({
-                                            foodId:foodid,
-                                            foodName:foodName,
-                                            foodPrice:price,
-                                            sizeId:size.id,
-                                            sizeName:size.sizeName,
-                                            restaurantId:restaurantId
+                                            foodId: foodid,
+                                            foodName: foodName,
+                                            foodPrice: price,
+                                            sizeId: size.id,
+                                            sizeName: size.sizeName,
+                                            restaurantId: restaurantId
                                         });
 
                                         console.log(userCart);
@@ -235,9 +231,24 @@ function RestaurantPage() {
                         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                         laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt
                     </p>
+                    <Button onClick={() => {
 
+
+                        axios.post("http://localhost:8080/favoriterestaurants/addfavoriterestaurant",null,{
+                            params:{
+                                restaurantid:state.id,
+                                userid:userid
+                            }
+                        }).then(()=>{
+                            console.log("Favori restoranlara eklendi");
+                        })
+
+
+                    }}  >Add to favorite</Button>
 
                 </Col>
+
+
 
             </Row>
 
@@ -256,8 +267,8 @@ function RestaurantPage() {
                                         if (categoryitem.name === fooditem.category.name) {
                                             return (
                                                 <FoodCardComponent
-                                                restaurantId={state.id}
-                                                foodid={fooditem.id} sizes={fooditem.portion} price={fooditem.price} foodName={fooditem.name}></FoodCardComponent>
+                                                    restaurantId={state.id}
+                                                    foodid={fooditem.id} sizes={fooditem.portion} price={fooditem.price} foodName={fooditem.name}></FoodCardComponent>
                                             )
                                         }
                                     })

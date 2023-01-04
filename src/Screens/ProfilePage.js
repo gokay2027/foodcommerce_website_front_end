@@ -7,6 +7,8 @@ import "../Styles/profilePageStyle.css"
 import NavBarRoute from './NavbarRoute';
 import axios from 'axios';
 import { AxiosProvider } from 'react-axios';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -14,7 +16,8 @@ import { AxiosProvider } from 'react-axios';
 function ProfilePage() {
 
 
-
+    const navigate = useNavigate();
+    
     const [currentUser, setCurrentUser] = useState(null);
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
@@ -59,21 +62,11 @@ function ProfilePage() {
 
 
     //All orders history State
-    const [orders,setOrdersHistory] = useState([]);
+    const [orders, setOrdersHistory] = useState([]);
 
-    const foodCartInformation = [
-        { name: "Mc chicken", price: 15, size: "Büyük" },
-        { name: "Mc chicken", price: 15, size: "Büyük" },
-        { name: "Mc chicken", price: 15, size: "Büyük" },
-        { name: "Bay Döner", price: 20, size: "Orta" },
-        { name: "Bay Döner", price: 20, size: "Orta" },
-        { name: "Bay Döner", price: 20, size: "Orta" },
-        { name: "Mc chicken", price: 15, size: "Büyük" },
-        { name: "Bay Döner", price: 20, size: "Orta" },
-        { name: "Bay Döner", price: 20, size: "Orta" },
-        { name: "Mc chicken", price: 15, size: "Büyük" },
-    ];
 
+    //Favorite Restaurants
+    const [favoriteRestaurants, setFavoriteRestaurants] = useState([]);
 
     //İki tane form oluştur Oluşturulan her formun ynaında bir tablo olsun
     //Bu tabloların bir tanesi kart biglilerini diğeri Adress bilgilerini göstersin
@@ -168,16 +161,29 @@ function ProfilePage() {
     }, [addressTrigger])
 
 
-    useEffect(()=>{
-        axios.get("http://localhost:8080/order/allorders",{
-            params:{
-                userId:userid,
+    useEffect(() => {
+        axios.get("http://localhost:8080/order/allorders", {
+            params: {
+                userId: userid,
             }
-        }).then((data)=>{
+        }).then((data) => {
             console.log(data.data.data);
             setOrdersHistory(data.data.data);
         })
-    },[])
+    }, [])
+
+
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/favoriterestaurants/getAllFavoriteRestaurantsByUserId", {
+            params: {
+                userId: userid
+            }
+        }).then((data) => {
+            setFavoriteRestaurants(data.data.data);
+            console.log(data.data.data);
+        })
+    }, [])
 
     return (
         <div
@@ -795,7 +801,7 @@ function ProfilePage() {
                                 <th>
                                     Food Name
                                 </th>
-                                
+
                                 <th>
                                     Price
                                 </th>
@@ -817,7 +823,7 @@ function ProfilePage() {
                                                     item.food.name
                                                 }
                                             </td>
-                                            
+
                                             <td>
                                                 {
                                                     item.food.price
@@ -826,9 +832,9 @@ function ProfilePage() {
                                             </td>
                                             <td>
                                                 {
-                                                    item.userAddress.streetNo 
+                                                    item.userAddress.streetNo
                                                 }
-                                                 -
+                                                -
                                                 {
                                                     item.userAddress.hoodName
                                                 }
@@ -844,6 +850,68 @@ function ProfilePage() {
                                                 {
                                                     item.userAddress.buildingNumber
                                                 }
+
+                                            </td>
+
+                                        </tr>
+                                    )
+                                })
+                            }
+
+                        </tbody>
+                    </Table>
+                </Card>
+            </div>
+
+
+            <div className='orderHistoryDivStyle button1'>
+
+                <h3>
+                    Favori Restoranlar:
+                </h3>
+                {/* Card componenti içinde sipariş geçmişinin gösterileceği component oluşturulacak */}
+                {/* Food name - Price - Size - Adress (Stringler birleştirilecek)  */}
+                <Card>
+                    <Table bordered height="200">
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Restoran Adı:
+                                </th>
+
+                                <th>
+                                    Ekrana git
+                                </th>
+                                <th>
+                                    ##
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                favoriteRestaurants.map((item, index) => {
+                                    return (
+                                        <tr>
+                                            <th scope="row">
+                                                {index + 1}
+                                            </th>
+                                            <td>
+                                                {
+                                                    item.restaurant.name
+                                                }
+                                            </td>
+
+                                            <td>
+                                                <Button onClick={()=>{
+                                                    navigate("/restaurantpage",{ state: { id: item.restaurant.id} });
+                                                }} color='primary'> Siteye git </Button>
+
+                                            </td>
+                                            <td>
+                                                
 
                                             </td>
 

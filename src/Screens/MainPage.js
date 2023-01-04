@@ -13,9 +13,7 @@ import NavBarRoute from "./NavbarRoute";
 import axios from 'axios';
 import "../Styles/mainpageStyle.css"
 import backgroundimageurl from "../images/foodbackground.jpg";
-const data = ["Döner", "Kebap", "Çorba", "Hamburger", "İçecek", "Tatlı"]
 
-const cardData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 
 
