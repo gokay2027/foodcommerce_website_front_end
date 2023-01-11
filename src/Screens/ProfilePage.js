@@ -439,7 +439,8 @@ function ProfilePage() {
                                 })
                                     .then(() => {
                                         console.log("Kart eklendi!!");
-                                        setAddressTrigger(true);
+                                        setCardTrigger(true);
+                                        //window.location.reload(false);
                                     })
 
                             }
@@ -667,7 +668,8 @@ function ProfilePage() {
                                 }).then(() => {
 
                                     console.log("Başarı ile eklendi");
-                                    setAdresses([]);
+                                    setAddressTrigger(true);
+                                    
                                 })
 
 
@@ -758,7 +760,7 @@ function ProfilePage() {
                                                                         }
                                                                     }).then(() => {
                                                                         console.log(item.id + " idli adres silindi");
-                                                                        setAdresses([]);
+                                                                        setAddressTrigger(true);
                                                                     })
                                                                 }}
 
